@@ -1,5 +1,7 @@
 import Head from "next/head";
+import Grid from '@mui/material/Grid';
 import { useRouter } from "next/router";
+
 
 
 export default function Post({ post }) {
@@ -17,6 +19,7 @@ export default function Post({ post }) {
             </Head>
             <h2>{post.title}</h2>
             <p>{post.body}</p>
+            <Grid>test MUI</Grid>
         </>
 
     )

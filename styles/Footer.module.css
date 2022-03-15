@@ -1,0 +1,19 @@
+.footer {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  bottom: 0;
+  background: rgb(231, 120, 23);
+  background: linear-gradient(
+    138deg,
+    rgba(231, 120, 23, 1) 0%,
+    rgba(233, 142, 57, 1) 31%,
+    rgba(252, 177, 103, 1) 68%,
+    rgba(251, 200, 133, 1) 100%
+  );
+}
+
+.footer__link__icon {
+  font-size: 25px;
+  color: aliceblue;
+}

@@ -1,0 +1,18 @@
+.title {
+}
+
+.list__link {
+  list-style-type: none;
+  padding: 0;
+}
+
+.link__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #adb5bd;
+}
+
+.link__more__pages {
+}

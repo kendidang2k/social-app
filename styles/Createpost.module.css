@@ -1,0 +1,47 @@
+.create__post__form {
+  width: 100%;
+}
+
+.choose__image__create__post:hover {
+  box-shadow: none;
+  background-color: inherit;
+}
+
+.test1 {
+  width: 100%;
+  height: 50px;
+}
+
+.createpost__content {
+  width: 100%;
+  padding: 12px 10px 20px 45px;
+  position: relative;
+  border-radius: 10px;
+  color: rgb(80, 80, 80);
+  border: 1px solid rgb(173, 173, 173);
+}
+
+.img__post {
+  max-width: 200px;
+}
+
+.video__post {
+  max-width: 320px;
+}
+
+.createpost__input__content {
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+  outline: none;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 0 20px 0 0;
+    color: rgb(131, 131, 131);
+  border: none;
+  overflow: hidden;
+}
+
+.createpost__input__content:hover {
+  overflow: overlay;
+}
