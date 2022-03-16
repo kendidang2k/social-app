@@ -1,0 +1,106 @@
+.post__item__publisher {
+  font-weight: bold;
+}
+
+.post__item__button__options {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ececec;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+.post__item__button__options:hover {
+  background-color: #d6d6d6;
+}
+
+.hide__comment {
+  height: 0;
+  background-color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  /* transition: 0.3s ease-in-out; */
+}
+.post__item__comment__box {
+  height: auto;
+  background-color: #fff;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s ease-in-out;
+}
+
+.post__item__comment__box__detail__content {
+  background-color: #e2e2e2;
+  padding: 4px 10px 7px 10px;
+  border-radius: 10px;
+}
+
+.post__item__comment__box__detail__content a {
+  color: #088dcd;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.image__post__item {
+  width: 100%;
+  border-radius: 5px;
+}
+.comment__form {
+  width: 100%;
+  height: 100%;
+  padding: 5px 0;
+  position: relative;
+}
+
+#comment__input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 5px 35px 5px 15px;
+  color: rgb(99, 99, 99);
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  border: 1px solid rgba(255, 163, 40, 0.54);
+}
+#comment__input:focus {
+  -webkit-box-shadow: 0px 0px 11px 5px rgba(255, 163, 40, 0.54);
+  box-shadow: 0px 0px 11px 5px rgba(255, 163, 40, 0.54);
+}
+.button__share__post__item:hover {
+  color: #f16529;
+}
+.button__share__post__item svg {
+  margin-right: 7px;
+}
+
+.post__item__button_like:hover {
+  background: linear-gradient(135deg, rgb(36, 109, 255), rgb(9, 157, 255));
+}
+.post__item__button_heart:hover {
+  background: linear-gradient(to right, #e76140, #f5804d);
+}
+
+.comment__icon__post__item:hover {
+  color: #f16529;
+}
+
+.comment__icon__post__item svg {
+  margin-right: 5px;
+}
+
+.video__post__item {
+  width: 100%;
+}
+
+.hide__option__post {
+  display: none;
+}

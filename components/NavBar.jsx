@@ -99,11 +99,6 @@ export default function Navbar() {
                                                         {itemLink.icon}
                                                     </Grid>
                                                     {itemLink.title}
-                                                    {/* <Grid sx={{ width: '40px', height: '40px', backgroundColor: `${itemLink.bgColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#fff', fontSize: '20px', marginRight: '15px' }}>
-                                                        {itemLink.icon}
-                                                        <GrBlog />
-                                                    </Grid>
-                                                    {itemLink.title} */}
                                                 </a>
                                             </Link>
                                         </li>
@@ -112,7 +107,7 @@ export default function Navbar() {
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={12}></Grid>
+                    {/* <Grid item xs={12}></Grid> */}
                 </Grid >
             </Grid>
         </Grid >

@@ -1,14 +1,14 @@
 import React, { Children, createContext, useState } from 'react'
 import { auth } from '../firebase/config'
 import { useEffect } from 'react';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 
 
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-    
+
     const router = useRouter();
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
@@ -33,7 +33,11 @@ export default function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{ user, setUser }}>
-            {loading ? <CircularProgress /> : children}
+            {loading ?
+                <Grid sx={{ width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                    <CircularProgress />
+                </Grid>
+                : children}
         </AuthContext.Provider>
     )
 }

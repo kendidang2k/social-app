@@ -62,9 +62,9 @@ export default function Header({ navControl, navStatus }) {
 
     return (
         <div className={style.header}>
-            <Grid className="header__wrapper" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: { xs: '0', md: '15px 0' }, transition: '.3s ease-in-out' }}>
+            <Grid className="header__wrapper" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: { xs: '0', md: '15px 0 15px 20px' }, transition: '.3s ease-in-out' }}>
                 <Link href="#" className={style.homepage__logo}>
-                    <Image className={style.header__logo} src={headerlogo} alt="Header logo" width={100} height={49} />
+                    <Image src={headerlogo} alt="Header logo" width={100} height={49} />
                 </Link>
                 <Grid sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'space-between' }}>
                     <button className={style.header__button}><RiChat3Line /></button>

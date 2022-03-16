@@ -37,11 +37,31 @@
   font-size: 17px;
   font-weight: bold;
   padding: 0 20px 0 0;
-    color: rgb(131, 131, 131);
+  color: rgb(131, 131, 131);
   border: none;
   overflow: hidden;
 }
 
+.createpost__input__content::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.createpost__input__content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.createpost__input__content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+.createpost__input__content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 .createpost__input__content:hover {
   overflow: overlay;
 }

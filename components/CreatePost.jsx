@@ -12,8 +12,6 @@ export default function CreatePost() {
 
     const { user } = useContext(AuthContext)
 
-    console.log('user', user.photoURL)
-
     const getInitialState = () => {
         return { file: [] }
     }
@@ -41,7 +39,7 @@ export default function CreatePost() {
     }
 
     return (
-        <Grid container sx={{ backgroundColor: '#fff', padding: '10px 20px' }}>
+        <Grid container sx={{ backgroundColor: '#fff', padding: '10px 20px', borderRadius: '10px' }}>
 
             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                 <Grid sx={{ width: '40px', height: '40px', backgroundColor: '#f5f5f5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fd6600' }}>
@@ -77,9 +75,6 @@ export default function CreatePost() {
                                 </video>
                             }
                         </Grid>
-
-                        {/* <textarea className={style.createpost__input__content} placeholder="What's on your mind ?"></textarea> */}
-                        {/* <InputBase placeholder="" sx={{ width: '100%', minHeight: '150px', padding: '5px 10px 10px 40px', border: '1px solid black' }}></InputBase> */}
                     </Grid>
                     <Grid item xs={12}>
                         <Button
