@@ -1,12 +1,10 @@
 import Link from "next/link"
-import Post from "../../components/post";
-
 
 export default function PostList({ postList }) {
     return (
         <>
             <h1>Post List</h1>
-            {
+            {/* {
                 postList.map(post => {
                     return (
                         <div key={post.id}>
@@ -18,7 +16,7 @@ export default function PostList({ postList }) {
                         </div>
                     )
                 })
-            }
+            } */}
         </>
     )
 }
