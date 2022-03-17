@@ -1,5 +1,6 @@
 import { Avatar, ButtonBase, Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import Image from 'next/image';
 import Link from 'next/link'
 import { AiOutlineExclamationCircle, AiOutlineLike, AiOutlineHeart } from "react-icons/ai";
 import { BsThreeDots, BsShare } from "react-icons/bs";
@@ -45,7 +46,7 @@ export default function PostItem({ postItem }) {
                     <Typography component={"p"} sx={{ fontSize: '13px', fontWeight: 'bold', color: '#adb5bd', lineHeight: '22px', marginBottom: '20px' }}>{postItemData.content}</Typography>
                 </Grid>
                 {
-                    postItemData.image && <img src={postItemData.image} alt="Post image" className={style.image__post__item} />
+                    postItemData.image && <Image src={postItemData.image} alt="Post image" className={style.image__post__item} />
                 }
                 {
                     postItemData.video && <video className={style.video__post__item} controls>

@@ -47,12 +47,6 @@ const HeaderLink = [
 
 ]
 
-const handleReset = () => {
-    if (!window.confirm('Reset?')) {
-        throw new Error('Cancel reset');
-    }
-};
-
 export default function Header({ navControl, navStatus }) {
 
     const user = useContext(AuthContext);
@@ -63,8 +57,10 @@ export default function Header({ navControl, navStatus }) {
     return (
         <div className={style.header}>
             <Grid className="header__wrapper" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: { xs: '0', md: '15px 0 15px 20px' }, transition: '.3s ease-in-out' }}>
-                <Link href="#" className={style.homepage__logo}>
-                    <Image src={headerlogo} alt="Header logo" width={100} height={49} />
+                <Link href="#" className={style.homepage__logo} passHref>
+                    <a>
+                        <Image src={headerlogo} alt="Header logo" width={100} height={49} />
+                    </a>
                 </Link>
                 <Grid sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'space-between' }}>
                     <button className={style.header__button}><RiChat3Line /></button>
@@ -107,7 +103,7 @@ export default function Header({ navControl, navStatus }) {
                     {
                         HeaderLink.map((item) => {
                             return (
-                                <Link href={item.url} key={item.id}>
+                                <Link href={item.url} key={item.id} passHref>
                                     <a className={router.pathname == item.url ? style.header__button__lg__active : style.header__button__lg}>{item.icon}</a>
                                 </Link>
                             )
@@ -119,7 +115,7 @@ export default function Header({ navControl, navStatus }) {
                     <button className={style.header__button__pc}><MdChatBubbleOutline /></button>
                     <button className={`${style.header__button__pc} ${style.header__button__pc__cog}`}><HiOutlineCog /></button>
                     <Grid sx={{ marginLeft: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Link href="/">
+                        <Link href="/" passHref>
                             <a> <Avatar src={user.user.photoURL}>N</Avatar></a>
                         </Link>
                     </Grid>

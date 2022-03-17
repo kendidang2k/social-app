@@ -1,5 +1,6 @@
 import { Avatar, Button, ButtonBase, Grid, InputBase, TextareaAutosize, Typography } from '@mui/material'
 import { Field, Form, Formik } from 'formik';
+import Image from 'next/image';
 import React, { useContext, useState } from 'react'
 import { BsPencilSquare } from "react-icons/bs";
 import { FcGallery } from "react-icons/fc";
@@ -67,7 +68,7 @@ export default function CreatePost() {
                         <Grid className={style.createpost__content} >
                             <Field as="textarea" placeholder="What's on your mind ?" name="postContent" id="postContent" className={style.createpost__input__content} />
                             {
-                                thumb && <img src={thumb} alt="Img Post" className={style.img__post}></img>
+                                thumb && <Image src={thumb} alt="Img Post" className={style.img__post}></Image>
                             }
                             {
                                 video && <video className={style.video__post} controls>

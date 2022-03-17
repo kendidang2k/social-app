@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import PostList from "../../components/PostList";
 import FriendRequest from "../../components/FriendRequest";
 import MoreFriend from "../../components/MoreFriend";
+import StoryList from "../../components/StoryList";
 
 
 export default function Homepage() {
@@ -21,6 +22,7 @@ export default function Homepage() {
   return (
     <Grid container sx={{ paddingBottom: '200px', display: { xs: 'flex', md: 'flex' }, flexFlow: { xs: 'column-reverse', md: 'row' }, maxWidth: '960px', margin: 'auto' }}>
       <Grid item xs={12} md={8} sx={{ height: '100%', padding: { xs: '0 10px', md: '25px 0 0 0' } }}>
+        <StoryList />
         <CreatePost />
         <PostList />
       </Grid>
