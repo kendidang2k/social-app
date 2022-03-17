@@ -19,6 +19,6 @@
   background: #555;
 }
 
-.navbar__hidden {
+.navbar__hidden__mobile {
   left: -350px;
 }

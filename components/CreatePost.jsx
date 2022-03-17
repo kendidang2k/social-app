@@ -68,7 +68,7 @@ export default function CreatePost() {
                         <Grid className={style.createpost__content} >
                             <Field as="textarea" placeholder="What's on your mind ?" name="postContent" id="postContent" className={style.createpost__input__content} />
                             {
-                                thumb && <Image src={thumb} alt="Img Post" className={style.img__post}></Image>
+                                thumb && <Image src={thumb} alt="Img Post" className={style.img__post} />
                             }
                             {
                                 video && <video className={style.video__post} controls>
