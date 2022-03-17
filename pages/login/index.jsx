@@ -78,7 +78,7 @@ export default function Login() {
               <Grid item xs={12} md={6} className={changeToSignUp ? style.item__right__changed : style.item__right} sx={{ width: { xs: '100%', lg: '50%' }, height: '100%', padding: '20px 50px', position: 'relative', backgroundColor: '#fff', position: 'absolute', right: 0, top: 0, transition: '.3s ease-in-out' }}>
                 {/* <Image src={bgimg} width='100%' height= '100%'></Image> */}
                 <Grid className={changeToSignUp ? '' : style.hide__item}>
-                  <Image src={logo} width='30px' height='30px' alt='logo' />
+                  <img src={logo} width='30px' height='30px' alt='logo' />
                   <Typography variant='h4' sx={{ fontWeight: 'bold', color: '#6a6262' }}>Login</Typography>
                   <Typography variant='p' sx={{ fontSize: '12px', }}>Share your fantastic moments with other</Typography>
                   <Grid container spacing={1}>
@@ -96,7 +96,7 @@ export default function Login() {
                   <Typography component="p" sx={{ width: '100%', textAlign: 'center' }}>Not a member yet ?<button className={style.button__change__status} onClick={changeLoginUI}>Register now</button></Typography>
                 </Grid>
                 <Grid className={changeToSignUp ? style.hide__item : ''} >
-                  <Image src={logo} width='30px' height='30px' alt='logo' />
+                  <img src={logo} width='30px' height='30px' alt='logo' />
                   <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Sign up</Typography>
                   <Typography variant='p' sx={{ fontSize: '12px', }}>Share your fantastic moments with other</Typography>
                   <Grid container spacing={1}>
