@@ -18,7 +18,7 @@ export default function Layout({ children }) {
     return (
         <div className={style.layout}>
             <Header navControl={setIsNavbarVisible} navStatus={isNavbarVisible} />
-            <Grid container sx={{ paddingTop: { xs: '70px', md: '100px' }, backgroundColor: '#eeeeee', height: '100vh', overflow: 'hidden' }}>
+            <Grid container sx={{ paddingTop: { xs: '80px', md: '100px' }, backgroundColor: '#eeeeee', height: '100vh', overflow: 'hidden' }}>
                 <Grid item xs={12} md={3.5} lg={2} sx={{ width: '300px', height: { xs: '100%', md: 'calc(100vh - 100px)' }, position: { xs: 'fixed', md: 'relative' }, top: 0, left: 0, zIndex: '10', backgroundColor: '#fff', boxShadow: { xs: '11px 0px 10px -3px #00000034', md: 'none' }, transition: '0.4s ease-in-out', overflow: 'hidden' }} className={isNavbarVisible ? style.navbar : style.navbar__hidden__mobile}>
                     <Navbar />
                 </Grid>

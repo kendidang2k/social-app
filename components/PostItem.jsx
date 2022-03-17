@@ -89,7 +89,6 @@ export default function PostItem({ postItem }) {
                 <Grid >
                     {
                         postItemData.comment && postItemData.comment.map((cmtItem, index) => {
-                            console.log('cmtItem', cmtItem)
                             return (
                                 <Grid key={index} sx={{ marginTop: '10px' }}>
                                     <Grid container className='post__item__comment__box__detail' >

@@ -14,13 +14,13 @@ const newsFeedListItem = [
     {
         title: 'Newsfeed',
         icon: <BiTv />,
-        linkTo: '/',
+        linkTo: '/homepage',
         bgColor: 'linear-gradient(to right,#0575e6,#021b79)'
     },
     {
         title: 'Explore Stories',
         icon: <RiGlobalLine />,
-        linkTo: '/',
+        linkTo: '/story',
         bgColor: 'linear-gradient(to right,#f2994a,#f2c94c)'
     },
     {

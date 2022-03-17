@@ -7,25 +7,42 @@ import { AiOutlinePlus } from "react-icons/ai";
 import style from '../styles/Story.module.css'
 import 'swiper/css'
 import "swiper/css/navigation";
+import "swiper/css/free-mode";
+import StoryItem from './StoryItem';
+
 export default function StoryList() {
 
     const storyListData = storyList;
 
     return (
-        <Grid>
+        <Grid sx={{ marginBottom: '15px' }}>
             <Swiper
-                spaceBetween={5}
-                freeMode={true}
-                style={{ display: 'flex' }}
-                navigation={true}
-                pagination={true}
-                modules={[FreeMode, Pagination, Navigation]}
-                className={style.swiper__slide__cover}
+                slidesPerView={4}
+                spaceBetween={10}
+                pagination={{
+                    clickable: true,
+                }}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 4,
+                        spaceBetween: 5,
+                    },
+                    768: {
+                        slidesPerView: 4,
+                        spaceBetween: 5,
+                    },
+                    1024: {
+                        slidesPerView: 5,
+                        spaceBetween: 5,
+                    },
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
             >
                 <SwiperSlide className={style.swiper__slide}>
                     <Grid sx={{ width: '100%', height: '100%', backgroundColor: '#343a40', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <ButtonBase sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', width: '35px', height: '35px', borderRadius: '50%', fontSize: '25px' }}><AiOutlinePlus /></ButtonBase>
+                        <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '-90%' }}>
+                            <ButtonBase sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', width: '45px', height: '45px', borderRadius: '50%', fontSize: '25px', color: '#fd6600' }}><AiOutlinePlus /></ButtonBase>
                             <Typography component={"p"} sx={{ fontSize: '15px', fontWeight: 'bold', color: '#fff' }}>Add Story</Typography>
                         </Grid>
                     </Grid>
@@ -34,20 +51,11 @@ export default function StoryList() {
                     storyListData && storyListData.map((storyItem) => {
                         return (
                             <SwiperSlide className={style.swiper__slide} key={storyItem.storyID} >
-                                <Grid sx={{ width: '100%', height: '100%', position: 'relative', backgroundImage: `url(${storyItem.image})`, backgroundSize: 'cover' }}>
-                                    {/* <img className={style.story__img} src={storyItem.image} alt="" /> */}
-                                </Grid>
+                                <StoryItem storyItem={storyItem} />
                             </SwiperSlide>
                         )
                     })
                 }
-                {/* 
-                <SwiperSlide className={style.swiper__slide}>Slide 1</SwiperSlide>
-                <SwiperSlide className={style.swiper__slide}>Slide 1</SwiperSlide>
-                <SwiperSlide className={style.swiper__slide}>Slide 1</SwiperSlide>
-                <SwiperSlide className={style.swiper__slide}>Slide 1</SwiperSlide>
-                <SwiperSlide className={style.swiper__slide}>Slide 1</SwiperSlide>
-                <SwiperSlide className={style.swiper__slide}>Slide 1</SwiperSlide> */}
             </Swiper>
         </Grid >
     )

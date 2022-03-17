@@ -1,8 +1,15 @@
 import { Grid } from '@mui/material'
 import React from 'react'
+import StoryPageHeader from '../../components/StoryPageHeader'
+import StoryPageList from '../../components/StoryPageList'
 
 export default function Story() {
     return (
-        <Grid sx={{ marginTop: '100px' }}>Story</Grid>
+        <Grid container sx={{ paddingBottom: '200px', display: { xs: 'flex', md: 'flex' }, flexFlow: { xs: 'column-reverse', md: 'row' }, maxWidth: '960px', margin: 'auto' }}>
+            <Grid item xs={12} sx={{ height: '100%', padding: { xs: '0 10px', md: '25px 0 0 0' } }}>
+                <StoryPageHeader />
+                <StoryPageList />
+            </Grid>
+        </Grid >
     )
 }

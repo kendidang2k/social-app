@@ -22,7 +22,7 @@ export default function Footer() {
         <Grid className={style.footer} sx={{ display: { xs: 'block', md: 'none' } }}>
             <Grid container>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="#" >
+                    <Link href="/homepage" >
                         <a className={style.footer__link__icon}>
                             <GoHome />
                         </a>

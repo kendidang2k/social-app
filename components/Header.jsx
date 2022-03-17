@@ -57,7 +57,7 @@ export default function Header({ navControl, navStatus }) {
     return (
         <div className={style.header}>
             <Grid className="header__wrapper" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: { xs: '0', md: '15px 0 15px 20px' }, transition: '.3s ease-in-out' }}>
-                <Link href="#" className={style.homepage__logo} passHref>
+                <Link href="/homepage" className={style.homepage__logo} passHref>
                     <a>
                         <Image src={headerlogo} alt="Header logo" width={100} height={49} />
                     </a>
