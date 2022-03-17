@@ -49,8 +49,9 @@
 }
 
 .image__post__item {
-  width: 100%;
-  border-radius: 5px;
+  position: relative !important;
+  max-width: 100% !important;
+  border-radius: 5px !important;
 }
 .comment__form {
   width: 100%;
