@@ -20,5 +20,5 @@
 }
 
 .navbar__hidden__mobile {
-  left: -350px;
+  left: -350px !important;
 }
