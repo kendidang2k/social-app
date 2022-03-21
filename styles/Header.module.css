@@ -22,6 +22,7 @@
 
 .header__button__pc {
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   font-weight: bold;
@@ -49,9 +50,6 @@
   line-height: 32px;
 }
 
-.header__wrapper {
-}
-
 .header__button {
   display: flex;
   align-items: center;
@@ -64,6 +62,8 @@
   border-radius: 50%;
   outline: none;
   margin-left: 10px;
+  background-color: #efefef;
+  cursor: pointer;
 }
 
 .menu__button {

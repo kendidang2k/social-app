@@ -9,6 +9,8 @@ import FriendRequest from "../../components/FriendRequest";
 import MoreFriend from "../../components/MoreFriend";
 import StoryList from "../../components/StoryList";
 import Image from 'next/image'
+import SuggestGroup from "../../components/SuggestGroup";
+import TopBlog from "../../components/TopBlog";
 
 export default function Homepage() {
 
@@ -29,7 +31,8 @@ export default function Homepage() {
       <Grid item xs={12} md={4} sx={{ padding: { xs: '0 10px', md: '25px 15px 0 10px' } }}>
         <FriendRequest />
         <MoreFriend />
-        <button onClick={handleSignOut}>Sign out</button>
+        <SuggestGroup />
+        <TopBlog />
       </Grid>
     </Grid >
   )

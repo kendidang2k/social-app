@@ -1,0 +1,8 @@
+.blog__single__item:hover {
+  background-color: rgb(233, 233, 233);
+}
+.blog__avt {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

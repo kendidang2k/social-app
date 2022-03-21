@@ -10,10 +10,12 @@ export default function Layout({ children }) {
 
     const [isNavbarVisible, setIsNavbarVisible] = useState(true)
 
-    // let currentHideNav = (window.innerWidth <= 760);
-    // if (window.innerWidth >= 900) {
-    //     setIsNavbarVisible(true)
-    // }
+    window.addEventListener('resize', function (event) {
+        if (this.screen.width > 900) {
+            setIsNavbarVisible(true);
+            event.preventDefault();
+        }
+    }, true);
 
     return (
         <div className={style.layout}>

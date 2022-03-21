@@ -6,12 +6,15 @@ import { BsPencilSquare } from "react-icons/bs";
 import { FcGallery } from "react-icons/fc";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AuthContext } from '../context/AuthProvider';
+import { addDocument } from '../firebase/service';
 
 import style from '../styles/Createpost.module.css'
 
 export default function CreatePost() {
 
     const { user } = useContext(AuthContext)
+
+    console.log('user', user.displayName)
 
     const getInitialState = () => {
         return { file: [] }
@@ -56,8 +59,17 @@ export default function CreatePost() {
                     postVideo: video,
                 }}
                 onSubmit={async (values) => {
-                    await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(values, null, 2));
+                    addDocument('posts', {
+                        publisher: user.displayName,
+                        publisherAvt: user.photoURL,
+                        content: values.postContent,
+                        image: '',
+                        video: '',
+                        like: 0,
+                        comments: [],
+                    })
+                    alert(JSON.stringify(values.postContent));
+                    // await new Promise((r) => setTimeout(r, 500));
                 }}
             >
                 <Form className={style.create__post__form}>

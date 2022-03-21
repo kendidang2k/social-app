@@ -8,8 +8,6 @@ export default function StoryPageList() {
 
     const storyListData = storyList;
 
-    console.log('storyListData', storyListData)
-
     return (
         <Grid>
             <Grid container sx={{ display: 'flex' }}>

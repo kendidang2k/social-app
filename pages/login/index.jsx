@@ -1,19 +1,15 @@
-import { FacebookAuthProvider, signInWithPopup, GoogleAuthProvider, getAuth } from 'firebase/auth';
+// import { FacebookAuthProvider, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { Formik, Form } from 'formik';
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { BsGoogle, BsFacebook } from "react-icons/bs";
-import { FaFacebookF } from "react-icons/fa";
-import bgimg from '../../assets/images/LoginPage/background1.jpg'
 import Image from 'next/image';
-import { async } from '@firebase/util';
-import { auth, db } from '../../firebase/config';
 import { useRouter } from 'next/router';
-
 import logo from '../../assets/images/LoginPage/logo.jpg'
 import style from '../../styles/Login.module.css'
-
+import { addDocument } from '../../firebase/service';
+import { auth } from '../../firebase/config';
 
 const fbProvider = new FacebookAuthProvider();
 const ggProvider = new GoogleAuthProvider();
@@ -26,23 +22,40 @@ export default function Login() {
 
   const changeLoginUI = () => {
     setChangeToSignUp(!changeToSignUp);
-    console.log(changeToSignUp);
   }
 
   const handleFbLogin = async () => {
     try {
-      const data = await signInWithPopup(auth, fbProvider);
-      console.log(data);
+      // const data = await signInWithPopup(auth, fbProvider);
+      // if (data.user.metadata.creationTime === data.user.metadata.lastSignInTime) {
+      //   addDocument("users", {
+      //     displayName: data.user.displayName,
+      //     photoURL: data.user.photoURL,
+      //     uid: data.user.uid,
+      //     friends: [],
+      //     notifications: [],
+      //   })
+      //   console.log("Login ne")
+      // }
       router.push('homepage')
     } catch (error) {
-
+      alert('error:', error)
     }
   }
 
   const handleGgLogin = async () => {
     try {
       const data = await signInWithPopup(auth, ggProvider);
-      console.log(data);
+      if (data.user.metadata.creationTime === data.user.metadata.lastSignInTime) {
+        addDocument("users", {
+          displayName: data.user.displayName,
+          photoURL: data.user.photoURL,
+          uid: data.user.uid,
+          friends: [],
+          notifications: [],
+        })
+        console.log("Login ne")
+      }
       router.push('homepage')
     } catch (error) {
 

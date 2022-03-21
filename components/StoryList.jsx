@@ -17,7 +17,7 @@ export default function StoryList() {
     return (
         <Grid sx={{ marginBottom: '15px' }}>
             <Swiper
-                slidesPerView={4}
+                slidesPerView={3}
                 spaceBetween={10}
                 pagination={{
                     clickable: true,
@@ -41,7 +41,7 @@ export default function StoryList() {
             >
                 <SwiperSlide className={style.swiper__slide}>
                     <Grid sx={{ width: '100%', height: '100%', backgroundColor: '#343a40', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '-90%' }}>
+                        <Grid sx={{ width: '100%', marginBottom: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'absolute', bottom: '0', left: '0' }}>
                             <ButtonBase sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', width: '45px', height: '45px', borderRadius: '50%', fontSize: '25px', color: '#fd6600' }}><AiOutlinePlus /></ButtonBase>
                             <Typography component={"p"} sx={{ fontSize: '15px', fontWeight: 'bold', color: '#fff' }}>Add Story</Typography>
                         </Grid>

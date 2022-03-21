@@ -7,8 +7,6 @@ const postListData = postList;
 
 export default function PostList() {
 
-  console.log('postListData', postListData)
-
   return (
     <Grid sx={{ marginTop: '10px' }}>
       {

@@ -26,13 +26,13 @@ const newsFeedListItem = [
     {
         title: 'Groups',
         icon: <HiOutlineUserGroup />,
-        linkTo: '/',
+        linkTo: '/group',
         bgColor: 'linear-gradient(to right,#ee0979,#ff6a00)'
     },
     {
         title: 'Profile',
         icon: <BsPerson />,
-        linkTo: '/',
+        linkTo: '/profile',
         bgColor: 'linear-gradient(135deg,#05f,#09f)'
     },
 

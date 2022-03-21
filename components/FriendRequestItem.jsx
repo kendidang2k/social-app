@@ -13,7 +13,6 @@ export default function FriendRequestItem({ friendRequestItem }) {
                         <Typography component={"span"} sx={{ marginLeft: '10px', fontSize: '15px', fontWeight: 'bold' }}>{friendRequestItem.senderName}</Typography>
                     </a>
                 </Link>
-
             </Grid>
             <Grid sx={{ display: 'flex' }}>
                 <ButtonBase sx={{ width: '100px', height: '35px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(138deg, rgba(231,120,23,1) 0%, rgba(233,142,57,1) 55%, rgba(252,177,103,1) 86%, rgba(251,200,133,1) 100%)', borderRadius: '35px', fontSize: '15px', fontWeight: 'bold', color: '#fff', marginRight: '15px' }}>Confirm</ButtonBase>

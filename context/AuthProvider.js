@@ -18,7 +18,6 @@ export default function AuthProvider({ children }) {
             if (user) {
                 const { displayName, photoURL, uid, docid } = user;
                 setUser({ displayName, photoURL, uid, docid });
-                console.log(user);
                 setLoading(false);
                 router.push("/homepage");
                 return;

@@ -2,14 +2,11 @@
 import firebase from 'firebase/compat/app';
 
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, connectAuthEmulator } from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCQjg643tX0GyHWcbZbFEN6z4Gr1REQEJ0",
     authDomain: "social-app-9bf73.firebaseapp.com",
@@ -25,6 +22,11 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const db = getFirestore();
+const storage = getStorage(app);
 
-export { db, auth };
-export default firebase;
+connectAuthEmulator(auth, 'http://localhost:9099');
+connectFirestoreEmulator(db, 'localhost', 8080);
+connectStorageEmulator(storage, 'localhost', 9199);
+
+export { db, auth, storage };
+

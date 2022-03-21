@@ -2,20 +2,23 @@ import React, { useContext, useState } from 'react'
 import headerlogo from '../assets/images/Header/Logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Avatar, Button, Grid, Input, InputBase } from '@mui/material'
+import { Avatar, Button, Grid, Input, InputBase, Popover } from '@mui/material'
 import { useRouter } from 'next/router';
-
 import { BsCameraVideo, BsPerson } from "react-icons/bs";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { RiChat3Line, RiShoppingBag3Line } from "react-icons/ri";
 import { MdHistory, MdChatBubbleOutline } from "react-icons/md";
 import { FiSearch, FiBell } from "react-icons/fi";
-import { HiOutlineCog } from "react-icons/hi";
+import { HiOutlineCog, HiOutlineUserGroup } from "react-icons/hi";
 import { BiHome } from "react-icons/bi";
 
 import style from '../styles/Header.module.css'
 import { AuthContext } from '../context/AuthProvider'
 import { Form, Formik } from 'formik'
+import NotificationBox from './NotificationBox'
+import BasicPopover from './BasicPopover'
+import { StoreContext } from '../context/StoreProvider'
+import SettingBox from './SettingBox'
 
 
 const HeaderLink = [
@@ -31,13 +34,13 @@ const HeaderLink = [
     },
     {
         id: '3',
-        icon: <BsCameraVideo />,
-        url: '/'
+        icon: <HiOutlineUserGroup />,
+        url: '/group'
     },
     {
         id: '4',
         icon: <BsPerson />,
-        url: '/'
+        url: '/profile'
     },
     {
         id: '5',
@@ -53,6 +56,8 @@ export default function Header({ navControl, navStatus }) {
     const router = useRouter();
 
     const [isInputSearchVisible, setIsInputSearchVisible] = useState(false)
+    const { isHeaderNotiVisible, setIsHeaderNotiVisible } = useContext(StoreContext)
+    const { isSettingVisible, setIsSettingVisible } = useContext(StoreContext)
 
     return (
         <div className={style.header}>
@@ -63,8 +68,13 @@ export default function Header({ navControl, navStatus }) {
                     </a>
                 </Link>
                 <Grid sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'space-between' }}>
-                    <button className={style.header__button}><RiChat3Line /></button>
-                    <button className={style.header__button}><MdHistory /></button>
+                    {/* <button className={style.header__button}><RiChat3Line /></button> */}
+                    <Link href="/messagebox" passHref>
+                        <a className={style.header__button}><RiChat3Line /></a>
+                    </Link>
+                    <Link href="/story" passHref>
+                        <a className={style.header__button}><MdHistory /></a>
+                    </Link>
                     <button className={style.header__button} onClick={() => setIsInputSearchVisible(!isInputSearchVisible)}><FiSearch /></button>
                     <button className={style.menu__button} onClick={() => navControl(!navStatus)}></button>
                     <Grid className={isInputSearchVisible ? style.search__form : style.search__form__off}>
@@ -87,10 +97,6 @@ export default function Header({ navControl, navStatus }) {
                             )}
                         </Formik>
                         <button className={style.button__close__search} onClick={() => setIsInputSearchVisible(!isInputSearchVisible)}>X</button>
-                        {/* <form >
-                            
-                            <button>X</button>
-                        </form> */}
                     </Grid>
                 </Grid>
                 <Grid sx={{ display: { xs: 'none', md: 'flex' }, width: { md: '350px', lg: '350px' } }}>
@@ -111,9 +117,16 @@ export default function Header({ navControl, navStatus }) {
                     }
                 </Grid>
                 <Grid sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between' }}>
-                    <button className={style.header__button__pc}><FiBell /></button>
+                    <button className={style.header__button__pc} onClick={() => setIsHeaderNotiVisible(!isHeaderNotiVisible)}><FiBell />
+                        <NotificationBox />
+                    </button>
                     <button className={style.header__button__pc}><MdChatBubbleOutline /></button>
-                    <button className={`${style.header__button__pc} ${style.header__button__pc__cog}`}><HiOutlineCog /></button>
+                    <Grid sx={{ position: 'relative' }}>
+                        <button className={`${style.header__button__pc} ${style.header__button__pc__cog}`} onClick={() => setIsSettingVisible(!isSettingVisible)}><HiOutlineCog />
+                        </button>
+                        <SettingBox />
+                    </Grid>
+
                     <Grid sx={{ marginLeft: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Link href="/" passHref>
                             <a> <Avatar src={user.user.photoURL}>N</Avatar></a>
