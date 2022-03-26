@@ -9,7 +9,7 @@ export default function MoreFriendItem({ moreFriendItem }) {
             <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
                 <Grid sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar src={moreFriendItem.photoURL}></Avatar>
-                    <Link href="/">
+                    <Link href="/" passHref>
                         <a>
                             <Typography component={"span"} sx={{ marginLeft: '10px', fontSize: '15px', fontWeight: 'bold' }}>{moreFriendItem.senderName}</Typography>
                         </a>

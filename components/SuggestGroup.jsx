@@ -10,11 +10,11 @@ import style from '../styles/SuggestGroup.module.css'
 export default function SuggestGroup() {
 
     const suggestGroup = groupList[0];
-    console.log('suggestGroup:', suggestGroup);
+    // console.log('suggestGroup:', suggestGroup);
 
     return (
         <Grid sx={{ backgroundColor: '#fff', borderRadius: '10px', marginTop: '10px' }}>
-            <PageHeader title={"Suggest Group"} />
+            <PageHeader title={"Suggest Group"} linkTo={"/group"} />
             <Grid sx={{ padding: '15px' }}>
                 <Grid sx={{ width: '100%', height: '100%', overflow: 'hidden', borderRadius: '10px' }}>
                     <img src={suggestGroup.groupCover} alt="Group Cover IMG" className={style.suggestGroup__bg__cover} />

@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import Homepage from "./homepage";
 import AuthProvider from "../context/AuthProvider";
 import StoreProvider from "../context/StoreProvider";
+import AppProvider from "../context/AppProvider";
 
 export default function index() {
 
@@ -14,9 +15,11 @@ export default function index() {
 
     {/* <Homepage/> */}
     <AuthProvider>
-      <StoreProvider>
+      <AppProvider>
+        <StoreProvider>
 
-      </StoreProvider>
+        </StoreProvider>
+      </AppProvider>
     </AuthProvider>
 
   </div>

@@ -22,7 +22,7 @@ export default function PostItem({ postItem }) {
                 <Grid sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar src={postItemData.publisherAvt} sx={{ marginRight: '15px' }}></Avatar>
                     <Grid>
-                        <Link href="/" >
+                        <Link href="/" passHref>
                             <a className={style.post__item__publisher}>{postItemData.publisher}</a>
                         </Link>
                         <Typography component={"p"} sx={{ fontSize: '11px', fontWeight: '500', color: '#adb5bd' }}>{postItemData.publishedAt}</Typography>
@@ -96,7 +96,7 @@ export default function PostItem({ postItem }) {
                                             <Avatar src={cmtItem.cmtPublisherAvt} sx={{ width: { xs: 30, sm: 32, md: 37 }, height: { xs: 30, sm: 32, md: 37 }, marginLeft: '3px' }}></Avatar>
                                         </Grid>
                                         <Grid item xs={10.5} className={style.post__item__comment__box__detail__content} sx={{ marginLeft: '10px' }}>
-                                            <Link href="/">
+                                            <Link href="/" passHref>
                                                 <a >{cmtItem.cmtPublisher}</a>
                                             </Link>
                                             <Typography component={"span"} sx={{ marginLeft: '10px', color: '#92929e', fontSize: '12px' }}>{cmtItem.cmtPublishedAt}</Typography>

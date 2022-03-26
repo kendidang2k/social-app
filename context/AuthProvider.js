@@ -16,8 +16,8 @@ export default function AuthProvider({ children }) {
     useEffect(() => {
         const unsub = auth.onAuthStateChanged((user) => {
             if (user) {
-                const { displayName, photoURL, uid, docid } = user;
-                setUser({ displayName, photoURL, uid, docid });
+                const { displayName, photoURL, coverPhoto, uid, docid } = user;
+                setUser({ displayName, photoURL, coverPhoto, uid, docid });
                 setLoading(false);
                 router.push("/homepage");
                 return;

@@ -13,7 +13,7 @@ export default function FriendRequest() {
 
     return (
         <Grid sx={{ backgroundColor: '#fff', borderRadius: '10px' }}>
-            <PageHeader title={"FriendRequest"} />
+            <PageHeader title={"FriendRequest"} linkTo={"/"} />
             <Grid sx={{ padding: '20px' }}>
                 {
                     FriendRequestListData && FriendRequestListData.map((friendRequestItem, index) => {

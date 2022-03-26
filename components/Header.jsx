@@ -120,7 +120,7 @@ export default function Header({ navControl, navStatus }) {
                     <button className={style.header__button__pc} onClick={() => setIsHeaderNotiVisible(!isHeaderNotiVisible)}><FiBell />
                         <NotificationBox />
                     </button>
-                    <button className={style.header__button__pc}><MdChatBubbleOutline /></button>
+                    <button className={style.header__button__pc} onClick={() => router.push('/messagebox')}><MdChatBubbleOutline /></button>
                     <Grid sx={{ position: 'relative' }}>
                         <button className={`${style.header__button__pc} ${style.header__button__pc__cog}`} onClick={() => setIsSettingVisible(!isSettingVisible)}><HiOutlineCog />
                         </button>

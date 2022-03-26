@@ -1,4 +1,6 @@
 import { Avatar, Button, ButtonBase, Grid, InputBase, TextareaAutosize, Typography } from '@mui/material'
+import { getApp } from 'firebase/app';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import React, { useContext, useState } from 'react'
@@ -6,34 +8,41 @@ import { BsPencilSquare } from "react-icons/bs";
 import { FcGallery } from "react-icons/fc";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AuthContext } from '../context/AuthProvider';
+import { storage } from '../firebase/config';
 import { addDocument } from '../firebase/service';
 
 import style from '../styles/Createpost.module.css'
 
 export default function CreatePost() {
 
+    const [file, setFile] = useState(null)
+
     const { user } = useContext(AuthContext)
-
-    console.log('user', user.displayName)
-
-    const getInitialState = () => {
-        return { file: [] }
-    }
 
     const [thumb, setThumb] = useState("")
     const [video, setVideo] = useState("")
-    // const [image    ]
-
-    const reader = new FileReader()
 
     const handleResetFileChoosen = () => {
         setThumb("");
         setVideo("");
     }
 
+    const handleReset = () => {
+        setFile(null)
+        handleResetFileChoosen();
+    };
+
+    const onSubmitImage = () => {
+        const storageRef = ref(storage, file.name)
+        uploadBytes(storageRef, file).then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+        });
+    }
+
     const onChangeImageCreatePost = (e) => {
         handleResetFileChoosen();
-        console.log(e.target.files[0])
+        setFile(e.target.files[0])
+        console.log(e.target.files[0]);
         if (e.target.files[0].type == "image/jpeg") {
             setThumb(URL.createObjectURL(e.target.files[0]));
         }
@@ -58,18 +67,53 @@ export default function CreatePost() {
                     postImage: thumb,
                     postVideo: video,
                 }}
-                onSubmit={async (values) => {
-                    addDocument('posts', {
-                        publisher: user.displayName,
-                        publisherAvt: user.photoURL,
-                        content: values.postContent,
-                        image: '',
-                        video: '',
-                        like: 0,
-                        comments: [],
+                onSubmit={async (values, actions) => {
+                    if (file == null) {
+                        addDocument('posts', {
+                            publisherID: user.uid,
+                            publisher: user.displayName,
+                            publisherAvt: user.photoURL,
+                            content: values.postContent,
+                            image: '',
+                            video: '',
+                            like: 0,
+                            comments: [],
+                        })
+                    }
+                    else if (file.type == 'image/jpeg') {
+                        addDocument('posts', {
+                            publisherID: user.uid,
+                            publisher: user.displayName,
+                            publisherAvt: user.photoURL,
+                            content: values.postContent,
+                            image: file.name,
+                            video: '',
+                            like: 0,
+                            comments: [],
+                        })
+                        onSubmitImage();
+                    }
+                    else {
+                        addDocument('posts', {
+                            publisherID: user.uid,
+                            publisher: user.displayName,
+                            publisherAvt: user.photoURL,
+                            content: values.postContent,
+                            image: '',
+                            video: file.name,
+                            like: 0,
+                            comments: [],
+                        })
+                        onSubmitImage();
+                    }
+                    actions.resetForm({
+                        values: {
+                            postContent: '',
+                            postImage: thumb,
+                            postVideo: video,
+                        }
                     })
-                    alert(JSON.stringify(values.postContent));
-                    // await new Promise((r) => setTimeout(r, 500));
+                    handleReset();
                 }}
             >
                 <Form className={style.create__post__form}>
@@ -102,6 +146,7 @@ export default function CreatePost() {
                                 type="file"
                                 hidden
                                 name='postImage'
+                                id='postImage'
                                 onChange={onChangeImageCreatePost}
                             />
                         </Button>

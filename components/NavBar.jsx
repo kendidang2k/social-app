@@ -93,7 +93,7 @@ export default function Navbar() {
                                 morePageItem.map((itemLink, index) => {
                                     return (
                                         <li key={index}>
-                                            <Link href={itemLink.linkTo}>
+                                            <Link href={itemLink.linkTo} passHref>
                                                 <a className={style.link__item}>
                                                     <Grid sx={{ width: '45px', height: '45px', background: `${itemLink.bgColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#fff', fontSize: '25px', marginRight: '15px' }}>
                                                         {itemLink.icon}

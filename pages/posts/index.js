@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export default function PostList({ postList }) {
+export default function PostList() {
     return (
         <>
             <h1>Post List</h1>
@@ -21,17 +21,17 @@ export default function PostList({ postList }) {
     )
 }
 
-export async function getStaticProps() {
-    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const data = await res.json();
+// export async function getStaticProps() {
+//     const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+//     const data = await res.json();
 
-    console.log(data)
+//     console.log(data)
 
-    return {
-        props: {
-            postList: data,
-        }
-    }
-}
+//     return {
+//         props: {
+//             postList: data,
+//         }
+//     }
+// }
 
 

@@ -6,10 +6,11 @@ import { useState } from 'react';
 import { BsGoogle, BsFacebook } from "react-icons/bs";
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { collection, addDoc } from "firebase/firestore";
 import logo from '../../assets/images/LoginPage/logo.jpg'
 import style from '../../styles/Login.module.css'
 import { addDocument } from '../../firebase/service';
-import { auth } from '../../firebase/config';
+import { auth, db } from '../../firebase/config';
 
 const fbProvider = new FacebookAuthProvider();
 const ggProvider = new GoogleAuthProvider();
@@ -26,20 +27,24 @@ export default function Login() {
 
   const handleFbLogin = async () => {
     try {
-      // const data = await signInWithPopup(auth, fbProvider);
-      // if (data.user.metadata.creationTime === data.user.metadata.lastSignInTime) {
-      //   addDocument("users", {
-      //     displayName: data.user.displayName,
-      //     photoURL: data.user.photoURL,
-      //     uid: data.user.uid,
-      //     friends: [],
-      //     notifications: [],
-      //   })
-      //   console.log("Login ne")
-      // }
-      router.push('homepage')
-    } catch (error) {
-      alert('error:', error)
+      const data = await signInWithPopup(auth, fbProvider)
+      if (data.user.metadata.creationTime === data.user.metadata.lastSignInTime) {
+        console.log('data', data)
+        addDocument("users", {
+          uid: data.user.uid,
+          displayName: data.user.displayName,
+          photoURL: data.user.photoURL,
+          coverPhoto: '',
+          friends: [],
+          notifications: [],
+          photo: [],
+          video: [],
+          posts: []
+        })
+      }
+      router.push('homepage');
+    } catch (e) {
+      console.log(e.message);
     }
   }
 
@@ -48,17 +53,22 @@ export default function Login() {
       const data = await signInWithPopup(auth, ggProvider);
       if (data.user.metadata.creationTime === data.user.metadata.lastSignInTime) {
         addDocument("users", {
+          uid: data.user.uid,
           displayName: data.user.displayName,
           photoURL: data.user.photoURL,
-          uid: data.user.uid,
-          friends: [],
+          coverPhoto: '/',
+          following: [],
+          follower: [],
           notifications: [],
+          photo: [],
+          video: [],
+          posts: []
         })
-        console.log("Login ne")
+        // console.log("Login ne")
       }
       router.push('homepage')
     } catch (error) {
-
+      console.log('error:', error);
     }
   }
 

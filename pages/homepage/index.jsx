@@ -14,12 +14,6 @@ import TopBlog from "../../components/TopBlog";
 
 export default function Homepage() {
 
-  const router = useRouter();
-
-  const handleSignOut = () => {
-    auth.signOut();
-    router.push('/login')
-  }
 
   return (
     <Grid container sx={{ paddingBottom: '200px', display: { xs: 'flex', md: 'flex' }, flexFlow: { xs: 'column-reverse', md: 'row' }, maxWidth: '960px', margin: 'auto' }}>

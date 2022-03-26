@@ -8,7 +8,7 @@ export default function FriendRequestItem({ friendRequestItem }) {
         <Grid sx={{ marginBottom: '20px' }}>
             <Grid sx={{ display: 'flex', marginBottom: '10px' }}>
                 <Avatar src={friendRequestItem.photoURL}></Avatar>
-                <Link href="/">
+                <Link href="/" passHref>
                     <a>
                         <Typography component={"span"} sx={{ marginLeft: '10px', fontSize: '15px', fontWeight: 'bold' }}>{friendRequestItem.senderName}</Typography>
                     </a>

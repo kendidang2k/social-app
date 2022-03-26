@@ -11,7 +11,7 @@ export default function MoreFriend() {
 
     return (
         <Grid sx={{ backgroundColor: '#fff', borderRadius: '10px', marginTop: '15px' }}>
-            <PageHeader title={"More Friend"} />
+            <PageHeader title={"More Friend"} linkTo={"/"} />
             <Grid sx={{ padding: '20px' }}>
                 {
                     moreFriendListData && moreFriendListData.map((moreFriendItem, index) => {

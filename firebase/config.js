@@ -10,6 +10,7 @@ import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
     apiKey: "AIzaSyCQjg643tX0GyHWcbZbFEN6z4Gr1REQEJ0",
     authDomain: "social-app-9bf73.firebaseapp.com",
+    databaseURL: "https://social-app-9bf73-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "social-app-9bf73",
     storageBucket: "social-app-9bf73.appspot.com",
     messagingSenderId: "1052954814309",
@@ -22,7 +23,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const db = getFirestore();
-const storage = getStorage(app);
+const storage = getStorage();
 
 connectAuthEmulator(auth, 'http://localhost:9099');
 connectFirestoreEmulator(db, 'localhost', 8080);

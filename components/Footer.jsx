@@ -22,35 +22,35 @@ export default function Footer() {
         <Grid className={style.footer} sx={{ display: { xs: 'block', md: 'none' } }}>
             <Grid container>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="/homepage" >
+                    <Link href="/homepage" passHref>
                         <a className={style.footer__link__icon}>
                             <GoHome />
                         </a>
                     </Link>
                 </Grid>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="#" >
+                    <Link href="#" passHref>
                         <a className={style.footer__link__icon}>
                             <FiBox />
                         </a>
                     </Link>
                 </Grid>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="#" >
+                    <Link href="#" passHref>
                         <a className={style.footer__link__icon}>
                             <BiLayout />
                         </a>
                     </Link>
                 </Grid>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="#" >
+                    <Link href="#" passHref>
                         <a className={style.footer__link__icon}>
                             <ImStack />
                         </a>
                     </Link>
                 </Grid>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="#" >
+                    <Link href="#" passHref>
                         <a className={style.footer__link__icon}>
                             <Avatar sx={{ width: '30px', height: '30px' }} src={user.user.photoURL}></Avatar>
                         </a>

@@ -11,17 +11,17 @@ export default function TopBlog() {
 
     const blogListData = blogList.slice(0, 3);
 
-    console.log('blogListData:', blogListData);
+    // console.log('blogListData:', blogListData);
 
     return (
-        <Grid sx={{ marginTop: '10px', backgroundColor: '#fff' }}>
-            <PageHeader title={"Top Blog"} />
+        <Grid sx={{ marginTop: '10px', backgroundColor: '#fff', borderRadius: '10px' }}>
+            <PageHeader title={"Top Blog"} linkTo={"/"} />
             <Grid sx={{ padding: '10px' }}>
                 {
                     blogListData && blogListData.map((blogItem) => {
                         return (
-                            <Grid sx={{ width: '100%', marginBottom: '10px', padding: '10px', borderRadius: '10px', transition: '.3s ease-in-out' }} className={style.blog__single__item}>
-                                <Link href='' passHref>
+                            <Grid key={blogItem.blogID} sx={{ width: '100%', marginBottom: '10px', padding: '10px', borderRadius: '10px', transition: '.3s ease-in-out' }} className={style.blog__single__item}>
+                                <Link href='/' passHref>
                                     <a >
                                         <Grid sx={{ display: 'flex' }}>
                                             <Grid sx={{ width: '65px', height: '65px', borderRadius: '10px', overflow: 'hidden' }}>
