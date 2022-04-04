@@ -2,7 +2,7 @@ import { Avatar, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
 import React, { useContext } from 'react'
 import { StoreContext } from '../context/StoreProvider'
-import { notificationData } from '../mock/NotificationData'
+import { notificationData } from '../mock/notificationData'
 
 import style from '../styles/NotificationBox.module.css'
 
