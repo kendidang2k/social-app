@@ -107,7 +107,6 @@ export default function PostItem({ postItem }) {
                 // doc.data() is never undefined for query doc snapshots
                 console.log("comments", doc.data().detail);
                 commentArrayTemp.push(doc.data())
-                setCurrentPostComment(commentArrayTemp)
             });
             console.log('currentPostComment', currentPostComment);
         }
