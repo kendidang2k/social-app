@@ -1,14 +1,14 @@
 import { Avatar, Button, ButtonBase, Grid, InputBase, TextareaAutosize, Typography } from '@mui/material'
-import { getApp } from 'firebase/app';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import React, { useContext, useState } from 'react'
 import { BsPencilSquare } from "react-icons/bs";
-import { FcGallery } from "react-icons/fc";
 import { HiOutlinePhotograph } from "react-icons/hi";
+import { AppContext } from '../context/AppProvider';
 import { AuthContext } from '../context/AuthProvider';
-import { storage } from '../firebase/config';
+import { db, storage } from '../firebase/config';
 import { addDocument } from '../firebase/service';
 
 import style from '../styles/Createpost.module.css'
@@ -17,6 +17,9 @@ export default function CreatePost() {
 
     const [file, setFile] = useState(null)
 
+    const { currentUser } = useContext(AppContext)
+
+    console.log("current user", currentUser)
     const { user } = useContext(AuthContext)
 
     const [thumb, setThumb] = useState("")
@@ -35,7 +38,7 @@ export default function CreatePost() {
     const onSubmitImage = () => {
         const storageRef = ref(storage, file.name)
         uploadBytes(storageRef, file).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
+            console.log('Uploaded file!');
         });
     }
 
@@ -49,6 +52,14 @@ export default function CreatePost() {
         else {
             setVideo(URL.createObjectURL(e.target.files[0]))
         }
+    }
+
+    const handleUpdateUserPosts = async () => {
+        const docRef = doc(db, "users", currentUser[0].docid);
+        await updateDoc(docRef, {
+            posts: arrayUnion(localStorage.getItem("currentDocRefId")),
+            photo: arrayUnion(file.name)
+        })
     }
 
     return (
@@ -70,41 +81,43 @@ export default function CreatePost() {
                 onSubmit={async (values, actions) => {
                     if (file == null) {
                         addDocument('posts', {
-                            publisherID: user.uid,
-                            publisher: user.displayName,
-                            publisherAvt: user.photoURL,
+                            publisherID: currentUser[0].docid,
+                            publisher: currentUser[0].displayName,
+                            publisherAvt: currentUser[0].photoURL,
                             content: values.postContent,
                             image: '',
                             video: '',
-                            like: 0,
+                            like: [],
                             comments: [],
                         })
                     }
                     else if (file.type == 'image/jpeg') {
                         addDocument('posts', {
-                            publisherID: user.uid,
-                            publisher: user.displayName,
-                            publisherAvt: user.photoURL,
+                            publisherID: currentUser[0].docid,
+                            publisher: currentUser[0].displayName,
+                            publisherAvt: currentUser[0].photoURL,
                             content: values.postContent,
                             image: file.name,
                             video: '',
-                            like: 0,
+                            like: [],
                             comments: [],
                         })
                         onSubmitImage();
+                        handleUpdateUserPosts();
                     }
                     else {
                         addDocument('posts', {
-                            publisherID: user.uid,
-                            publisher: user.displayName,
-                            publisherAvt: user.photoURL,
+                            publisherID: currentUser[0].docid,
+                            publisher: currentUser[0].displayName,
+                            publisherAvt: currentUser[0].photoURL,
                             content: values.postContent,
                             image: '',
                             video: file.name,
-                            like: 0,
+                            like: [],
                             comments: [],
                         })
                         onSubmitImage();
+                        handleUpdateUserPosts();
                     }
                     actions.resetForm({
                         values: {

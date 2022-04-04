@@ -1,10 +1,11 @@
-import { Avatar, Grid, Typography, Box, Tabs, Tab } from '@mui/material'
+import { Avatar, Grid, Typography, Box, Tabs, Tab, CircularProgress } from '@mui/material'
 import React, { useContext } from 'react'
 import { AuthContext } from '../../context/AuthProvider'
 import PropTypes from 'prop-types';
 import { user } from '../../mock/user';
 
 import style from '../../styles/ProfilePage.module.css'
+import { AppContext } from '../../context/AppProvider';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -41,7 +42,9 @@ function a11yProps(index) {
 
 export default function Profile() {
 
-    const currentUser = user;
+    const { currentUser, loading, setLoading } = useContext(AppContext);
+
+    console.log("current user:", currentUser);
 
     const [value, setValue] = React.useState(0);
 
@@ -49,22 +52,28 @@ export default function Profile() {
         setValue(newValue);
     };
 
-    console.log("currentUser", currentUser)
-
     return (
-        <Grid container sx={{ paddingBottom: '200px', display: { xs: 'flex', md: 'flex' }, flexFlow: { xs: 'column-reverse', md: 'row' }, maxWidth: '960px', margin: 'auto' }}>
+        currentUser[0] != undefined && <Grid container sx={{ paddingBottom: '200px', display: { xs: 'flex', md: 'flex' }, flexFlow: { xs: 'column-reverse', md: 'row' }, maxWidth: '960px', margin: 'auto' }}>
             <Grid item xs={12} sx={{ height: '100%', padding: { xs: '0 10px', md: '25px 0 0 0' } }}>
                 <Grid sx={{ padding: '15px 15px 80px 15px', backgroundColor: '#fff', borderRadius: '10px' }}>
                     <Grid sx={{ width: '100%', maxHeight: "300px", height: { xs: 'auto', sm: '300px' }, position: 'relative' }}>
-                        <img src={currentUser.coverPhoto} alt="Cover Photo" className={style.cover__photo} />
-                        <Avatar src={currentUser.avtPhoto} alt="Photo Avat" sx={{ width: '90px', height: '90px', position: 'absolute', bottom: '-60px', left: '5%', border: '5px solid #fff' }}></Avatar>
+                        {
+                            currentUser[0].coverPhoto ?
+                                <img src={currentUser[0].coverPhoto} alt="Cover Photo" className={style.cover__photo} />
+                                :
+                                <img src='/' alt="test" className={style.cover__photo} />
+                        }
+                        {
+                            currentUser[0].photoURL && <Avatar src={currentUser[0].photoURL} alt="Photo Avat" sx={{ width: '90px', height: '90px', position: 'absolute', bottom: '-60px', left: '5%', border: '5px solid #fff' }}></Avatar>
+                        }
                     </Grid>
                     <Grid sx={{ position: 'relative', marginLeft: { xs: '120px', md: '130px', lg: '140px', marginTop: '5px' } }}>
                         <Typography component={"p"} sx={{ fontSize: '25px', fontWeight: 'bold', lineHeight: '25px' }}>
-                            {currentUser.displayName}
+                            {currentUser[0].displayName}
                         </Typography>
                         <Typography component={"p"} sx={{ color: '#9e9e9e' }}>
-                            {currentUser.friend.length} Friends
+                            {currentUser[0].follower.length}
+                            <Typography component={'span'} sx={{ marginLeft: '5px' }}>Follower</Typography>
                         </Typography>
                     </Grid>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

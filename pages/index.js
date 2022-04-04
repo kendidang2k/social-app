@@ -14,13 +14,7 @@ export default function index() {
     </Head>
 
     {/* <Homepage/> */}
-    <AuthProvider>
-      <AppProvider>
-        <StoreProvider>
-
-        </StoreProvider>
-      </AppProvider>
-    </AuthProvider>
+    
 
   </div>
   )

@@ -7,24 +7,43 @@ export const AppContext = createContext();
 export default function AppProvider({ children }) {
 
     const { user } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
 
-    const postCondition = useMemo(() => {
+    const currentUserCondition = useMemo(() => {
         return {
-            fieldName: 'publisherID',
+            fieldName: 'uid',
             operator: '==',
             compareValue: user.uid,
-            orderBy: true
         }
     }, [user.uid])
 
-    const currentUserPost = useFirestore('posts', postCondition)
+    const currentUser = useFirestore('users', currentUserCondition)
 
-    console.log("currentUserPost", currentUserPost)
+    console.log("current user context: ", currentUser)
 
+    const allUserCondition = useMemo(() => {
+        return {
+            fieldName: 'uid',
+            operator: '!=',
+            compareValue: user.uid
+        }
+    }, [user.uid])
+
+    const allUser = useFirestore('users', allUserCondition)
+
+    console.log("all user:", allUser);
+
+    // if (currentUser && allUser) {
+    //     setLoading(false)
+    // } else {
+    //     setLoading(true)
+    // }
 
     return (
         <AppContext.Provider value={{
-            currentUserPost
+            currentUser,
+            loading,
+            allUser
         }}>
             {children}
         </AppContext.Provider>

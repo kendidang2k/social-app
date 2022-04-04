@@ -31,7 +31,9 @@ export default function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{
+            user, setUser
+        }}>
             {loading ?
                 <Grid sx={{ width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
                     <CircularProgress />

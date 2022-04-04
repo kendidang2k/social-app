@@ -1,7 +1,8 @@
-import { Grid, Typography } from '@mui/material'
+import { ButtonBase, Grid, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import Link from 'next/link';
 import { BiTv } from "react-icons/bi";
+import { AiOutlineLogout } from "react-icons/ai";
 import { RiGlobalLine } from "react-icons/ri";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { BsPerson } from "react-icons/bs";
@@ -9,6 +10,7 @@ import { FaBlog, FaStore } from "react-icons/fa";
 
 import style from '../styles/Navbar.module.css'
 import { StoreContext } from '../context/StoreProvider';
+import { async } from '@firebase/util';
 
 const newsFeedListItem = [
     {
@@ -107,9 +109,16 @@ export default function Navbar() {
                             }
                         </ul>
                     </Grid>
+                    <Grid>
+                        <ButtonBase sx={{ display: { md: 'none' }, width: '100px', height: '40px', backgroundColor: '#fd6600', fontSize: '15px', fontWeight: 'bold', color: '#fff' }}><Typography><AiOutlineLogout /></Typography> Log out</ButtonBase>
+                    </Grid>
                     {/* <Grid item xs={12}></Grid> */}
                 </Grid >
             </Grid>
         </Grid >
     )
 }
+
+// export async const getStaticsProps(){
+
+// }

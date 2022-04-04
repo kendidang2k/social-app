@@ -1,5 +1,7 @@
 import Layout from '../components/Layout'
+import AppProvider from '../context/AppProvider'
 import AuthProvider from '../context/AuthProvider'
+import PostProvider from '../context/PostProvider'
 import StoreProvider from '../context/StoreProvider'
 import '../styles/globals.css'
 
@@ -12,11 +14,15 @@ function MyApp({ Component, pageProps }) {
 
   return <div>
     <AuthProvider>
-      <StoreProvider>
-      <Layout>
-        <Component {...pageProps} />
-        </Layout>
-      </StoreProvider>
+      <AppProvider>
+        <PostProvider>
+          <StoreProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </StoreProvider>
+        </PostProvider>
+      </AppProvider>
     </AuthProvider>
   </div>
 

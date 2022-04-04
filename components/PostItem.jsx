@@ -1,5 +1,5 @@
 import { Avatar, ButtonBase, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link'
 import { AiOutlineExclamationCircle, AiOutlineLike, AiOutlineHeart } from "react-icons/ai";
@@ -8,13 +8,112 @@ import { FaRegComment } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import style from '../styles/PostItem.module.css'
 import { Field, Form, Formik } from 'formik';
+import { ref, getDownloadURL } from "firebase/storage";
+import { db, storage } from '../firebase/config';
+import { arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where, orderBy } from 'firebase/firestore';
+import { async } from '@firebase/util';
+import { AppContext } from '../context/AppProvider';
+import { addDocument } from '../firebase/service';
 
 
 export default function PostItem({ postItem }) {
 
+    const { currentUser } = useContext(AppContext);
     const postItemData = postItem;
+
+    const [currentPostLike, setCurrentPostLike] = useState(postItemData.like.length)
+    const [currentPostComment, setCurrentPostComment] = useState([])
+    const [likeStatus, setLikeStatus] = useState(true)
+    const docRef = doc(db, "posts", postItemData.docid);
+
+    const handleLikePost = () => {
+        setLikeStatus(!likeStatus);
+        if (likeStatus) {
+            setCurrentPostLike(currentPostLike + 1)
+            updateDoc(docRef, {
+                like: arrayUnion(currentUser[0].docid)
+            })
+        } else {
+            setCurrentPostLike(currentPostLike - 1)
+            updateDoc(docRef, {
+                like: arrayRemove(currentUser[0].docid)
+            })
+        }
+    }
+
+    const updatePostComment = (commentId) => {
+        updateDoc(docRef, {
+            comments: arrayUnion(commentId)
+        })
+    }
+
+
+    if (postItemData.image) {
+        getDownloadURL(ref(storage, postItemData.image))
+            .then((url) => {
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                    const blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+                console.log("url:", url);
+
+                const img = document.getElementById(`${postItemData.docid}__image`);
+                img.setAttribute('src', url);
+            })
+            .catch((error) => {
+                // Handle any errors
+                console.log("error:", error)
+            });
+    }
+    else if (postItemData.video) {
+        console.log('post Item video', postItemData.video)
+        getDownloadURL(ref(storage, postItemData.video))
+            .then((url) => {
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                    const blob = xhr.response;
+                    console.log("blob", blob);
+                };
+                xhr.open('GET', url);
+                xhr.send();
+                console.log("url:", url);
+
+                const video = document.getElementById(`${postItemData.docid}__video`);
+                video.setAttribute('src', url);
+            })
+            .catch((error) => {
+                // Handle any errors
+                console.log("error:", error)
+            });
+
+    } else {
+        return
+    }
+
+
     const [optionsVisible, setOptionsVisible] = useState(false);
     const [commentVisible, setCommentVisible] = useState(false);
+
+    useEffect(() => {
+        const handleCommentPost = async () => {
+            const q = query(collection(db, "comments"), orderBy('createdAt', 'desc'), where("postId", "==", postItemData.docid));
+            const querySnapshot = await getDocs(q);
+            const commentArrayTemp = [];
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log("comments", doc.data().detail);
+                commentArrayTemp.push(doc.data())
+                setCurrentPostComment(commentArrayTemp)
+            });
+            console.log('currentPostComment', currentPostComment);
+        }
+        handleCommentPost()
+    }, [postItemData.comments])
+
 
     return (
         <Grid className="post__item" sx={{ padding: '20px', marginBottom: '10px', backgroundColor: '#fff', borderRadius: '10px', transition: '.3s ease-in-out' }}>
@@ -22,10 +121,12 @@ export default function PostItem({ postItem }) {
                 <Grid sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar src={postItemData.publisherAvt} sx={{ marginRight: '15px' }}></Avatar>
                     <Grid>
-                        <Link href="/" passHref>
+                        <Link href={`profile/${postItemData.publisherID}`} passHref>
                             <a className={style.post__item__publisher}>{postItemData.publisher}</a>
                         </Link>
-                        <Typography component={"p"} sx={{ fontSize: '11px', fontWeight: '500', color: '#adb5bd' }}>{postItemData.publishedAt}</Typography>
+                        {
+                            postItemData.createdAt ? <Typography component={"p"} sx={{ fontSize: '11px', fontWeight: '500', color: '#adb5bd' }}>{postItemData.createdAt.toDate().toLocaleString()}</Typography> : ''
+                        }
                     </Grid>
                 </Grid>
                 <Grid sx={{ position: 'relative' }}>
@@ -46,23 +147,23 @@ export default function PostItem({ postItem }) {
                     <Typography component={"p"} sx={{ fontSize: '13px', fontWeight: 'bold', color: '#adb5bd', lineHeight: '22px', marginBottom: '20px' }}>{postItemData.content}</Typography>
                 </Grid>
                 {
-                    postItemData.image && <img src={postItemData.image} alt="Post image" className={style.image__post__item} />
+                    postItemData.image && <img src={postItemData.image} alt="Post image" id={`${postItemData.docid}__image`} className={style.image__post__item} />
                 }
                 {
-                    postItemData.video && <video className={style.video__post__item} controls>
+                    postItemData.video && <video className={style.video__post__item} id={`${postItem.docid}__video`} controls>
                         <source src={postItemData.video} />
                     </video>
                 }
                 <Grid sx={{ display: 'flex', marginTop: '15px', alignItems: 'center', justifyContent: 'space-between', }}>
                     <Grid sx={{ display: 'flex', alignItems: 'center' }}>
-                        <ButtonBase className={style.post__item__button_like} sx={{ width: { xs: '28px', md: '32px' }, height: { xs: '28px', md: '32px' }, display: 'flex', alignItems: 'center', justiContent: 'center', border: 'none', borderRadius: '50%', background: 'linear-gradient(135deg,#05f,#09f)', color: '#fff', fontSize: { xs: '15px', md: '20px' }, marginRight: { xs: '5px', md: '10px' }, transition: '.2s ease-in-out' }}>
+                        <ButtonBase onClick={handleLikePost} className={style.post__item__button_like} sx={{ width: { xs: '28px', md: '32px' }, height: { xs: '28px', md: '32px' }, display: 'flex', alignItems: 'center', justiContent: 'center', border: 'none', borderRadius: '50%', background: 'linear-gradient(135deg,#05f,#09f)', color: '#fff', fontSize: { xs: '15px', md: '20px' }, marginRight: { xs: '5px', md: '10px' }, transition: '.2s ease-in-out' }}>
                             <AiOutlineLike />
                         </ButtonBase>
                         <ButtonBase className={style.post__item__button_heart} sx={{ width: { xs: '28px', md: '32px' }, height: { xs: '28px', md: '32px' }, display: 'flex', alignItems: 'center', justiContent: 'center', border: 'none', borderRadius: '50%', background: 'linear-gradient(to right,#e44d26,#f16529)', color: '#fff', fontSize: { xs: '15px', md: '20px' }, transition: '.2s ease-in-out' }}>
                             <AiOutlineHeart />
                         </ButtonBase>
-                        <Typography sx={{ marginLeft: '5px', color: '#313131', fontWeight: 'bold', fontSize: { xs: '13px', md: '15px' } }}>{postItemData.like} Like</Typography>
-                        <ButtonBase className={style.comment__icon__post__item} sx={{ marginLeft: { xs: '15px', md: '25px' }, color: '#313131', fontWeight: 'bold', display: 'flex', alignItems: 'center', fontSize: { xs: '13px', md: '15px', transition: '.2s ease-in-out' } }} onClick={() => setCommentVisible(!commentVisible)}><FaRegComment />{postItemData.comment.length} Comment</ButtonBase>
+                        <Typography sx={{ marginLeft: '5px', color: '#313131', fontWeight: 'bold', fontSize: { xs: '13px', md: '15px' } }}>{currentPostLike} Like</Typography>
+                        <ButtonBase className={style.comment__icon__post__item} sx={{ marginLeft: { xs: '15px', md: '25px' }, color: '#313131', fontWeight: 'bold', display: 'flex', alignItems: 'center', fontSize: { xs: '13px', md: '15px', transition: '.2s ease-in-out' } }} onClick={() => setCommentVisible(!commentVisible)}><FaRegComment />{postItemData.comments.length} Comment</ButtonBase>
                     </Grid>
                     <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <ButtonBase className={style.button__share__post__item} sx={{ fontSize: { xs: '15px', md: '17px' }, color: '#313131', fontWeight: 'bold', transition: '.2s ease-in-out' }}><BsShare /> Share</ButtonBase>
@@ -75,9 +176,27 @@ export default function PostItem({ postItem }) {
                         initialValues={{
                             commentInput: '',
                         }}
-                        onSubmit={async (values) => {
-                            await new Promise((r) => setTimeout(r, 500));
-                            alert(JSON.stringify(values, null, 2));
+                        onSubmit={async (values, actions) => {
+                            // alert(JSON.stringify(values.commentInput))
+                            const q = query(collection(db, "comments"), where("postId", "==", postItemData.docid));
+                            const querySnapshot = await getDocs(q);
+                            addDocument('comments', {
+                                postId: postItemData.docid,
+                                publisherID: currentUser[0].docid,
+                                publisher: currentUser[0].displayName,
+                                publisherAvt: currentUser[0].photoURL,
+                                detail: JSON.stringify(values.commentInput).replaceAll('"', '')
+                            })
+                            querySnapshot.forEach((doc) => {
+                                // doc.data() is never undefined for query doc snapshots
+                                console.log("comments after post", doc.id);
+                                updatePostComment(doc.id)
+                            });
+                            actions.resetForm({
+                                values: {
+                                    commentInput: '',
+                                }
+                            })
                         }}
                     >
                         <Form className={style.comment__form}>
@@ -88,19 +207,21 @@ export default function PostItem({ postItem }) {
                 </Grid>
                 <Grid >
                     {
-                        postItemData.comment && postItemData.comment.map((cmtItem, index) => {
+                        currentPostComment && currentPostComment.map((cmtItem, index) => {
                             return (
                                 <Grid key={index} sx={{ marginTop: '10px' }}>
                                     <Grid container className='post__item__comment__box__detail' >
                                         <Grid sx={{ marginBottom: '10px' }}>
-                                            <Avatar src={cmtItem.cmtPublisherAvt} sx={{ width: { xs: 30, sm: 32, md: 37 }, height: { xs: 30, sm: 32, md: 37 }, marginLeft: '3px' }}></Avatar>
+                                            <Avatar src={cmtItem.publisherAvt} sx={{ width: { xs: 30, sm: 32, md: 37 }, height: { xs: 30, sm: 32, md: 37 }, marginLeft: '3px' }}></Avatar>
                                         </Grid>
                                         <Grid item xs={10.5} className={style.post__item__comment__box__detail__content} sx={{ marginLeft: '10px' }}>
-                                            <Link href="/" passHref>
-                                                <a >{cmtItem.cmtPublisher}</a>
+                                            <Link href={`profile/${cmtItem.publisherID}`} passHref>
+                                                <a >{cmtItem.publisher}</a>
                                             </Link>
-                                            <Typography component={"span"} sx={{ marginLeft: '10px', color: '#92929e', fontSize: '12px' }}>{cmtItem.cmtPublishedAt}</Typography>
-                                            <Typography component={"p"}>{cmtItem.cmtDetail}</Typography>
+                                            {
+                                                cmtItem.createdAt && <Typography component={"span"} sx={{ marginLeft: '10px', color: '#92929e', fontSize: '12px' }}>{cmtItem.createdAt.toDate().toLocaleString()}</Typography>
+                                            }
+                                            <Typography component={"p"}>{cmtItem.detail}</Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>

@@ -14,11 +14,14 @@ import { BiHome } from "react-icons/bi";
 
 import style from '../styles/Header.module.css'
 import { AuthContext } from '../context/AuthProvider'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import NotificationBox from './NotificationBox'
 import BasicPopover from './BasicPopover'
 import { StoreContext } from '../context/StoreProvider'
 import SettingBox from './SettingBox'
+import { db } from '../firebase/config'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import SearchResult from './SearchResult'
 
 
 const HeaderLink = [
@@ -58,6 +61,26 @@ export default function Header({ navControl, navStatus }) {
     const [isInputSearchVisible, setIsInputSearchVisible] = useState(false)
     const { isHeaderNotiVisible, setIsHeaderNotiVisible } = useContext(StoreContext)
     const { isSettingVisible, setIsSettingVisible } = useContext(StoreContext)
+    const [searchResultVisible, setSearchResultVisible] = useState(false);
+    const [searchInputValuePc, setSearchInputValuePc] = useState("")
+
+
+    const handleChangeInput = () => {
+        setSearchResultVisible(true)
+        const input = document.getElementById("searchInputPc");
+        console.log("input value:", input.value)
+        setSearchInputValuePc(input.value)
+    }
+
+    const handleSubmitSearch = async (searchInput) => {
+        console.log('aasdasd', searchInput);
+        const q = query(collection(db, "users"), where("displayName", "array-contains", searchInput));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log("filter user with input", doc.data());
+        });
+    }
 
     return (
         <div className={style.header}>
@@ -101,8 +124,25 @@ export default function Header({ navControl, navStatus }) {
                 </Grid>
                 <Grid sx={{ display: { xs: 'none', md: 'flex' }, width: { md: '350px', lg: '350px' } }}>
                     <Grid sx={{ width: '100%', position: 'relative' }}>
-                        <FiSearch className={style.header__search__input__icon} />
-                        <input className={style.header__search__input} placeholder='Start typing to search'></input>
+                        <Formik
+                            initialValues={{ searchInput: '' }}
+                            onSubmit={(values, actions) => {
+                                // alert(JSON.stringify(values.searchInput).replaceAll('"', ''))
+                                handleSubmitSearch(JSON.stringify(values.searchInput).replaceAll('"', ''))
+                                handleChangeInput();
+                            }}
+                        >
+                            {props => (
+                                <form onSubmit={props.handleSubmit}>
+                                    <FiSearch className={style.header__search__input__icon} />
+                                    <Field className={style.header__search__input} id="searchInputPc" name="searchInput" placeholder="Start typing to search" />
+                                    {/* {
+                                        searchResultVisible ? <SearchResult inputValue={searchInputValuePc} /> : <SearchResult inputValue={searchInputValuePc} />
+                                    } */}
+                                    <SearchResult inputValue={searchInputValuePc} />
+                                </form>
+                            )}
+                        </Formik>
                     </Grid>
                 </Grid>
                 <Grid sx={{ display: { xs: 'none', lg: 'flex' } }}>

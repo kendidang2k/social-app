@@ -8,7 +8,6 @@ export default function StoreProvider({ children }) {
     const [isHeaderNotiVisible, setIsHeaderNotiVisible] = useState(false)
     const [isSettingVisible, setIsSettingVisible] = useState(false)
 
-
     return (
         <StoreContext.Provider value={{
             isNavbarVisible, setIsNavbarVisible,
