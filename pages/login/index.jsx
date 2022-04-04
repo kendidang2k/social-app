@@ -141,8 +141,6 @@ export default function Login() {
                   .catch((error) => {
                     toast.error("Login fail !! Check agian !!")
                     console.log(error.message);
-                    // setErrorMess(error)
-                    // setOpen(true)
                   });
               }}
               validationSchema={validateLogin}
@@ -155,8 +153,6 @@ export default function Login() {
                 <Box sx={{ marginBottom: '15px' }}>
                   <TextInput sx={{ width: '100%' }} label="Password" id='password' name='password' InputProps={true} />
                 </Box>
-                {/* <TextField id="outlined-basic" label="Email" variant="outlined" sx={{ width: '100%', marginBottom: '20px' }} />
-                <TextField id="outlined-basic" label="Password" variant="outlined" sx={{ width: '100%' }} /> */}
                 <Button type='submit' variant="outlined" sx={{ width: '100%', margin: '20px 0' }}>Login to your account</Button>
               </Form>
             </Formik>
@@ -218,9 +214,6 @@ export default function Login() {
                 <Box sx={{ marginBottom: '15px' }}>
                   <TextInput sx={{ width: '100%' }} label='Confirm Password' name='confirmPassword' InputProps={true} />
                 </Box>
-                {/* <Field name='Email' id="outlined-basic" label="Email" variant="outlined" sx={{ width: '100%', marginBottom: { xs: '10px', md: '10px' } }} /> */}
-                {/* <Field name='Password' id="outlined-basic" label="Password" variant="outlined" sx={{ width: '100%', marginBottom: { xs: '10px', md: '10px' } }} /> */}
-                {/* <Field name='ConfirmPassword' id="outlined-basic" label="Confirm Password" variant="outlined" sx={{ width: '100%' }} /> */}
                 <Button type='submit' variant="outlined" sx={{ width: '100%', margin: '10px 0' }}>Sign up</Button>
               </Form>
             </Formik>
