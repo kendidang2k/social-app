@@ -24,7 +24,27 @@ export default function PostItem({ postItem }) {
     const [currentPostLike, setCurrentPostLike] = useState(postItemData.like.length)
     const [currentPostComment, setCurrentPostComment] = useState([])
     const [likeStatus, setLikeStatus] = useState(true)
+
+    const [optionsVisible, setOptionsVisible] = useState(false);
+    const [commentVisible, setCommentVisible] = useState(false);
+
     const docRef = doc(db, "posts", postItemData.docid);
+
+    useEffect(() => {
+        const handleCommentPost = async () => {
+            const q = query(collection(db, "comments"), orderBy('createdAt', 'desc'), where("postId", "==", postItemData.docid));
+            const querySnapshot = await getDocs(q);
+            const commentArrayTemp = [];
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log("comments", doc.data().detail);
+                commentArrayTemp.push(doc.data())
+                setCurrentPostComment(commentArrayTemp)
+            });
+            console.log('currentPostComment', currentPostComment);
+        }
+        handleCommentPost()
+    }, [postItemData.comments])
 
     const handleLikePost = () => {
         setLikeStatus(!likeStatus);
@@ -95,23 +115,6 @@ export default function PostItem({ postItem }) {
     }
 
 
-    const [optionsVisible, setOptionsVisible] = useState(false);
-    const [commentVisible, setCommentVisible] = useState(false);
-
-    useEffect(() => {
-        const handleCommentPost = async () => {
-            const q = query(collection(db, "comments"), orderBy('createdAt', 'desc'), where("postId", "==", postItemData.docid));
-            const querySnapshot = await getDocs(q);
-            const commentArrayTemp = [];
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                console.log("comments", doc.data().detail);
-                commentArrayTemp.push(doc.data())
-            });
-            console.log('currentPostComment', currentPostComment);
-        }
-        handleCommentPost()
-    }, [postItemData.comments])
 
 
     return (
