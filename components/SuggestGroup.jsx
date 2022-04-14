@@ -10,7 +10,6 @@ import style from '../styles/SuggestGroup.module.css'
 export default function SuggestGroup() {
 
     const suggestGroup = groupList[0];
-    // console.log('suggestGroup:', suggestGroup);
 
     return (
         <Grid sx={{ backgroundColor: '#fff', borderRadius: '10px', marginTop: '10px' }}>

@@ -1,0 +1,14 @@
+.cover__search__result::-webkit-scrollbar {
+  width: 5px;
+}
+
+.cover__search__result::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.cover__search__result::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}

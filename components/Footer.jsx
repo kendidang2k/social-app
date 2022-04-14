@@ -50,7 +50,7 @@ export default function Footer() {
                     </Link>
                 </Grid>
                 <Grid item xs={2.4} sx={{ display: 'flex', alignItem: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <Link href="#" passHref>
+                    <Link href="/profile" passHref>
                         <a className={style.footer__link__icon}>
                             <Avatar sx={{ width: '30px', height: '30px' }} src={user.user.photoURL}></Avatar>
                         </a>

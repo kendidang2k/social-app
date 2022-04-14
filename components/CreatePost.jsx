@@ -8,6 +8,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AppContext } from '../context/AppProvider';
 import { AuthContext } from '../context/AuthProvider';
+import { StoreContext } from '../context/StoreProvider';
 import { db, storage } from '../firebase/config';
 import { addDocument } from '../firebase/service';
 
@@ -18,8 +19,8 @@ export default function CreatePost() {
     const [file, setFile] = useState(null)
 
     const { currentUser } = useContext(AppContext)
+    const { setIsUpdateByCreate } = useContext(StoreContext)
 
-    console.log("current user", currentUser)
     const { user } = useContext(AuthContext)
 
     const [thumb, setThumb] = useState("")
@@ -37,15 +38,12 @@ export default function CreatePost() {
 
     const onSubmitImage = () => {
         const storageRef = ref(storage, file.name)
-        uploadBytes(storageRef, file).then((snapshot) => {
-            console.log('Uploaded file!');
-        });
+        uploadBytes(storageRef, file)
     }
 
     const onChangeImageCreatePost = (e) => {
         handleResetFileChoosen();
         setFile(e.target.files[0])
-        console.log(e.target.files[0]);
         if (e.target.files[0].type == "image/jpeg") {
             setThumb(URL.createObjectURL(e.target.files[0]));
         }

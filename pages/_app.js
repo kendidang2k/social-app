@@ -4,6 +4,7 @@ import AuthProvider from '../context/AuthProvider'
 import PostProvider from '../context/PostProvider'
 import StoreProvider from '../context/StoreProvider'
 import '../styles/globals.css'
+import MessageBox from './messagebox'
 
 function MyApp({ Component, pageProps }) {
 

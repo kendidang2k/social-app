@@ -2,7 +2,7 @@ import { collection, onSnapshot, where, query, orderBy } from '@firebase/firesto
 import { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
 
-const  useFirestore = (collectionName, condition) => {
+const useFirestore = (collectionName, condition) => {
 
     const [document, setDocument] = useState([])
 

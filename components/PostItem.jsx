@@ -1,4 +1,4 @@
-import { Avatar, ButtonBase, Grid, Typography } from '@mui/material'
+import { Avatar, ButtonBase, CircularProgress, Grid, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link'
@@ -24,6 +24,7 @@ export default function PostItem({ postItem }) {
     const [currentPostLike, setCurrentPostLike] = useState(postItemData.like.length)
     const [currentPostComment, setCurrentPostComment] = useState([])
     const [likeStatus, setLikeStatus] = useState(true)
+    const [isPostLoading, setIsPostLoading] = useState(true)
 
     const [optionsVisible, setOptionsVisible] = useState(false);
     const [commentVisible, setCommentVisible] = useState(false);
@@ -32,16 +33,13 @@ export default function PostItem({ postItem }) {
 
     useEffect(() => {
         const handleCommentPost = async () => {
+            let commentArrayTemp = [];
             const q = query(collection(db, "comments"), orderBy('createdAt', 'desc'), where("postId", "==", postItemData.docid));
             const querySnapshot = await getDocs(q);
-            const commentArrayTemp = [];
             querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                console.log("comments", doc.data().detail);
                 commentArrayTemp.push(doc.data())
-                setCurrentPostComment(commentArrayTemp)
             });
-            console.log('currentPostComment', currentPostComment);
+            setCurrentPostComment(commentArrayTemp)
         }
         handleCommentPost()
     }, [postItemData.comments])
@@ -67,7 +65,6 @@ export default function PostItem({ postItem }) {
         })
     }
 
-
     if (postItemData.image) {
         getDownloadURL(ref(storage, postItemData.image))
             .then((url) => {
@@ -78,10 +75,10 @@ export default function PostItem({ postItem }) {
                 };
                 xhr.open('GET', url);
                 xhr.send();
-                console.log("url:", url);
 
                 const img = document.getElementById(`${postItemData.docid}__image`);
                 img.setAttribute('src', url);
+                setIsPostLoading(true)
             })
             .catch((error) => {
                 // Handle any errors
@@ -89,21 +86,19 @@ export default function PostItem({ postItem }) {
             });
     }
     else if (postItemData.video) {
-        console.log('post Item video', postItemData.video)
         getDownloadURL(ref(storage, postItemData.video))
             .then((url) => {
                 const xhr = new XMLHttpRequest();
                 xhr.responseType = 'blob';
                 xhr.onload = (event) => {
                     const blob = xhr.response;
-                    console.log("blob", blob);
                 };
                 xhr.open('GET', url);
                 xhr.send();
-                console.log("url:", url);
 
                 const video = document.getElementById(`${postItemData.docid}__video`);
                 video.setAttribute('src', url);
+                setIsPostLoading(true)
             })
             .catch((error) => {
                 // Handle any errors
@@ -111,14 +106,14 @@ export default function PostItem({ postItem }) {
             });
 
     } else {
-        return
+        console.log("Created")
     }
 
 
 
 
     return (
-        <Grid className="post__item" sx={{ padding: '20px', marginBottom: '10px', backgroundColor: '#fff', borderRadius: '10px', transition: '.3s ease-in-out' }}>
+        isPostLoading ? <Grid className="post__item" sx={{ padding: '20px', marginBottom: '10px', backgroundColor: '#fff', borderRadius: '10px', transition: '.3s ease-in-out' }}>
             <Grid className="post__item__header" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Grid sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar src={postItemData.publisherAvt} sx={{ marginRight: '15px' }}></Avatar>
@@ -190,8 +185,6 @@ export default function PostItem({ postItem }) {
                                 detail: JSON.stringify(values.commentInput).replaceAll('"', '')
                             })
                             querySnapshot.forEach((doc) => {
-                                // doc.data() is never undefined for query doc snapshots
-                                console.log("comments after post", doc.id);
                                 updatePostComment(doc.id)
                             });
                             actions.resetForm({
@@ -233,5 +226,9 @@ export default function PostItem({ postItem }) {
                 </Grid>
             </Grid>
         </Grid >
+            :
+            <Grid sx={{ width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                <CircularProgress />
+            </Grid>
     )
 }

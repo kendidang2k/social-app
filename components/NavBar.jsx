@@ -11,6 +11,7 @@ import { FaBlog, FaStore } from "react-icons/fa";
 import style from '../styles/Navbar.module.css'
 import { StoreContext } from '../context/StoreProvider';
 import { async } from '@firebase/util';
+import { auth } from '../firebase/config';
 
 const newsFeedListItem = [
     {
@@ -109,8 +110,8 @@ export default function Navbar() {
                             }
                         </ul>
                     </Grid>
-                    <Grid>
-                        <ButtonBase sx={{ display: { md: 'none' }, width: '100px', height: '40px', backgroundColor: '#fd6600', fontSize: '15px', fontWeight: 'bold', color: '#fff' }}><Typography><AiOutlineLogout /></Typography> Log out</ButtonBase>
+                    <Grid sx={{ position: 'absolute', left: '10px', bottom: '30px' }}>
+                        <ButtonBase onClick={() => auth.signOut()} sx={{ display: { md: 'none' }, width: '100px', height: '35px', backgroundColor: '#fd6600', fontSize: '15px', fontWeight: 'bold', color: '#fff', borderRadius: '50px' }}><Typography sx={{ lineHeight: '11px', marginRight: '3px' }}><AiOutlineLogout /></Typography> Log out</ButtonBase>
                     </Grid>
                     {/* <Grid item xs={12}></Grid> */}
                 </Grid >

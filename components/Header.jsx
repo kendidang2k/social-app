@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import headerlogo from '../assets/images/Header/Logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Avatar, Button, Grid, Input, InputBase, Popover } from '@mui/material'
+import { Avatar, Button, ButtonBase, Grid, Input, InputBase, Popover, Typography } from '@mui/material'
 import { useRouter } from 'next/router';
 import { BsCameraVideo, BsPerson } from "react-icons/bs";
 import { AiOutlineThunderbolt } from "react-icons/ai";
@@ -22,6 +22,7 @@ import SettingBox from './SettingBox'
 import { db } from '../firebase/config'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import SearchResult from './SearchResult'
+import { AppContext } from '../context/AppProvider'
 
 
 const HeaderLink = [
@@ -57,23 +58,28 @@ export default function Header({ navControl, navStatus }) {
 
     const user = useContext(AuthContext);
     const router = useRouter();
+    const { currentUser } = useContext(AppContext)
 
     const [isInputSearchVisible, setIsInputSearchVisible] = useState(false)
     const { isHeaderNotiVisible, setIsHeaderNotiVisible } = useContext(StoreContext)
     const { isSettingVisible, setIsSettingVisible } = useContext(StoreContext)
-    const [searchResultVisible, setSearchResultVisible] = useState(false);
     const [searchInputValuePc, setSearchInputValuePc] = useState("")
+    const [searchInputValueMb, setSearchInputValueMb] = useState("")
+
+    const { searchResultVisible, setSearchResultVisible } = useContext(StoreContext)
 
 
     const handleChangeInput = () => {
-        setSearchResultVisible(true)
         const input = document.getElementById("searchInputPc");
-        console.log("input value:", input.value)
         setSearchInputValuePc(input.value)
     }
 
+    const handleChangeInputMobile = () => {
+        const input = document.getElementById("searchInput");
+        setSearchInputValueMb(input.value)
+    }
+
     const handleSubmitSearch = async (searchInput) => {
-        console.log('aasdasd', searchInput);
         const q = query(collection(db, "users"), where("displayName", "array-contains", searchInput));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -92,9 +98,10 @@ export default function Header({ navControl, navStatus }) {
                 </Link>
                 <Grid sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'space-between' }}>
                     {/* <button className={style.header__button}><RiChat3Line /></button> */}
-                    <Link href="/messagebox" passHref>
+                    <Link href="/messagebox">
                         <a className={style.header__button}><RiChat3Line /></a>
                     </Link>
+                    <ButtonBase onClick={() => router.push("/messagebox")} sx={{ width: '40px', height: '20px', backgroundColor: '#000' }}>Change to mess</ButtonBase>
                     <Link href="/story" passHref>
                         <a className={style.header__button}><MdHistory /></a>
                     </Link>
@@ -106,20 +113,21 @@ export default function Header({ navControl, navStatus }) {
                             initialValues={{ searchInput: '' }}
                             onSubmit={(values, actions) => {
                                 document.getElementById('searchInput').value = ''
-                                setTimeout(() => {
-                                    alert(JSON.stringify(values, null, 2));
-                                    actions.setSubmitting(false);
-                                }, 1000);
+                                handleSubmitSearch(JSON.stringify(values.searchInput).replaceAll('"', ''))
+                                setSearchResultVisible(true)
                             }}
                         >
                             {props => (
                                 <form onSubmit={props.handleSubmit} className={style.cover__search__form}>
                                     <InputBase id="searchInput" onChange={props.handleChange} onBlur={props.handleBlur} placeholder="Search..." name='searchInput' sx={{ width: '100%', height: '100%', padding: '5px 40px 5px 20px' }}></InputBase>
                                     {/* {props.errors.name && <div id="feedback">{props.errors.name}</div>} */}
+                                    {
+                                        searchResultVisible ? <SearchResult inputValue={searchInputValueMb} /> : ''
+                                    }
                                 </form>
                             )}
                         </Formik>
-                        <button className={style.button__close__search} onClick={() => setIsInputSearchVisible(!isInputSearchVisible)}>X</button>
+                        <button className={style.button__close__search} onClick={() => { setIsInputSearchVisible(!isInputSearchVisible); setSearchResultVisible(false) }}>X</button>
                     </Grid>
                 </Grid>
                 <Grid sx={{ display: { xs: 'none', md: 'flex' }, width: { md: '350px', lg: '350px' } }}>
@@ -130,16 +138,18 @@ export default function Header({ navControl, navStatus }) {
                                 // alert(JSON.stringify(values.searchInput).replaceAll('"', ''))
                                 handleSubmitSearch(JSON.stringify(values.searchInput).replaceAll('"', ''))
                                 handleChangeInput();
+                                setSearchResultVisible(true)
                             }}
                         >
                             {props => (
                                 <form onSubmit={props.handleSubmit}>
                                     <FiSearch className={style.header__search__input__icon} />
                                     <Field className={style.header__search__input} id="searchInputPc" name="searchInput" placeholder="Start typing to search" />
-                                    {/* {
-                                        searchResultVisible ? <SearchResult inputValue={searchInputValuePc} /> : <SearchResult inputValue={searchInputValuePc} />
-                                    } */}
-                                    <SearchResult inputValue={searchInputValuePc} />
+                                    {/* <input onBlur={setSearchResultVisible(true)} type="text" name="searchInput" placeholder="Start typing to search" /> */}
+                                    {
+                                        searchResultVisible ? <SearchResult inputValue={searchInputValuePc} /> : ''
+                                    }
+                                    {/* <SearchResult inputValue={searchInputValuePc} /> */}
                                 </form>
                             )}
                         </Formik>
@@ -158,7 +168,12 @@ export default function Header({ navControl, navStatus }) {
                 </Grid>
                 <Grid sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between' }}>
                     <button className={style.header__button__pc} onClick={() => setIsHeaderNotiVisible(!isHeaderNotiVisible)}><FiBell />
-                        <NotificationBox />
+                        {
+                            currentUser[0] && <Typography sx={{ width: '17px', height: '17px', backgroundColor: '#e40000', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', right: '8px', top: '4px', color: '#fff', fontSize: '10px', fontWeight: 'bold', lineHeight: '8px' }}>{currentUser[0].notifications.length}</Typography>
+                        }
+                        {
+                            currentUser[0] && <NotificationBox notificationsData={currentUser[0].notifications} />
+                        }
                     </button>
                     <button className={style.header__button__pc} onClick={() => router.push('/messagebox')}><MdChatBubbleOutline /></button>
                     <Grid sx={{ position: 'relative' }}>
@@ -168,7 +183,7 @@ export default function Header({ navControl, navStatus }) {
                     </Grid>
 
                     <Grid sx={{ marginLeft: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Link href="/" passHref>
+                        <Link href="/profile" passHref>
                             <a> <Avatar src={user.user.photoURL}>N</Avatar></a>
                         </Link>
                     </Grid>

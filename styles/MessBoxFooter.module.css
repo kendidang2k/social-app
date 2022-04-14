@@ -1,0 +1,11 @@
+.footer__link {
+  color: #545768;
+  font-size: 25px;
+  width: 50px;
+}
+
+.footer__item__active {
+  color: #7877ff;
+  font-size: 25px;
+  width: 50px;
+}

@@ -14,7 +14,7 @@ export default function StoryPageList() {
                 {
                     storyListData && storyListData.map((storyItem) => {
                         return (
-                            <Grid item xs={6} md={4} sx={{ padding: '10px', borderRadius: '10px', height: { xs: '270px', md: '350px' } }} key={storyItem.storyID}>
+                            <Grid item xs={6} md={4} sx={{ padding: '10px', borderRadius: '10px', height: { xs: '270px', md: '350px' }, overflow: 'hidden' }} key={storyItem.storyID}>
                                 <StoryItem storyItem={storyItem} />
                             </Grid>
                         )

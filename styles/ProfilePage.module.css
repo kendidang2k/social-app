@@ -4,3 +4,8 @@
   object-fit: cover;
   border-radius: 10px;
 }
+
+.button__change__cover__photo:hover {
+  background-color: inherit;
+  box-shadow: none;
+}

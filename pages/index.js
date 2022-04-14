@@ -13,8 +13,6 @@ export default function index() {
       <link rel="icon" href="/favicon.ico"></link>
     </Head>
 
-    {/* <Homepage/> */}
-    
 
   </div>
   )

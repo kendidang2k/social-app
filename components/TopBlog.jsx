@@ -11,8 +11,6 @@ export default function TopBlog() {
 
     const blogListData = blogList.slice(0, 3);
 
-    // console.log('blogListData:', blogListData);
-
     return (
         <Grid sx={{ marginTop: '10px', backgroundColor: '#fff', borderRadius: '10px' }}>
             <PageHeader title={"Top Blog"} linkTo={"/"} />

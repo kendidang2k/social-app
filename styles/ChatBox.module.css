@@ -1,0 +1,14 @@
+.cover__mess__list {
+  height: 500px;
+  overflow: scroll;
+}
+
+.test {
+  height: 500px;
+  overflow: scroll;
+}
+
+.current__user__mess {
+  position: relative;
+  flex-direction: row-reverse;
+}

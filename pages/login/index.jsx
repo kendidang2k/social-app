@@ -12,11 +12,11 @@ import logo from '../../assets/images/LoginPage/logo.jpg'
 import style from '../../styles/Login.module.css'
 import { addDocument } from '../../firebase/service';
 import { auth, db } from '../../firebase/config';
-
 import * as Yup from 'yup'
 import TextInput from '../../components/TextInput';
 import { AuthContext } from '../../context/AuthProvider';
 import { toast } from 'react-toastify';
+
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
@@ -39,7 +39,6 @@ export default function Login() {
     try {
       const data = await signInWithPopup(auth, fbProvider)
       if (data._tokenResponse.isNewUser) {
-        console.log('data', data)
         addDocument("users", {
           uid: data.user.uid,
           displayName: data.user.displayName,
@@ -50,13 +49,13 @@ export default function Login() {
           notifications: [],
           photo: [],
           video: [],
-          posts: []
+          posts: [],
+          blog: []
         })
       }
       router.push('homepage');
     } catch (e) {
       toast.error("Login fail !! Check agian !!")
-      console.log(e.message);
     }
   }
 
@@ -64,25 +63,23 @@ export default function Login() {
     try {
       const data = await signInWithPopup(auth, ggProvider);
       if (data._tokenResponse.isNewUser) {
-        console.log('data', data)
         addDocument("users", {
           uid: data.user.uid,
           displayName: data.user.displayName,
           photoURL: data.user.photoURL,
-          coverPhoto: '/',
+          coverPhoto: '',
           following: [],
           follower: [],
           notifications: [],
           photo: [],
           video: [],
-          posts: []
+          posts: [],
+          blog: []
         })
-        // console.log("Login ne")
       }
       router.push('homepage')
     } catch (error) {
       toast.error("Login fail !! Check agian !!")
-      console.log('error:', error);
     }
   }
 
@@ -185,13 +182,14 @@ export default function Login() {
                       uid: user.uid,
                       displayName: user.email,
                       photoURL: user.photoURL,
-                      coverPhoto: '/',
+                      coverPhoto: '',
                       following: [],
                       follower: [],
                       notifications: [],
                       photo: [],
                       video: [],
-                      posts: []
+                      posts: [],
+                      blog: []
                     })
                     toast.success("Register successfully !!")
                   })

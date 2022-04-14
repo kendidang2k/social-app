@@ -1,16 +1,261 @@
-import React from 'react'
+import { Avatar, Box, Grid, Tab, Tabs, Typography, } from '@mui/material'
+import React, { useContext } from 'react'
+import PropTypes from 'prop-types';
+import { Swiper, SwiperSlide } from "swiper/react";
+import MessBoxFooter from '../../components/MessBoxFooter'
+import MessBoxHeader from '../../components/MessBoxHeader'
+import AppProvider, { AppContext } from '../../context/AppProvider'
+import Link from 'next/link'
+import { SiMessenger } from "react-icons/si";
+import { AiFillHome } from "react-icons/ai";
+import { useRouter } from 'next/router';
+import { BiMessageRoundedDetail } from "react-icons/bi";
+import { BsFillPersonFill } from "react-icons/bs";
 
-export default function MessageBox() {
+import "swiper/css";
+import "swiper/css/pagination";
+
+import style from '../../styles/MessageBox.module.css'
+import { styled } from '@mui/system';
+import ChatRoomList from '../../components/ChatRoomList';
+import ChatBoxFollowingList from '../../components/ChatBoxFollowingList';
+import Head from 'next/head';
+import ChatBox from '../../components/ChatBox';
+import AuthProvider from '../../context/AuthProvider';
+import PostProvider from '../../context/PostProvider';
+import StoreProvider from '../../context/StoreProvider';
+
+const footerItem = [
+    {
+        id: '2',
+        icon: <BiMessageRoundedDetail />,
+        path: '/messagebox'
+    },
+    {
+        id: '3',
+        icon: <BsFillPersonFill />,
+        path: '/messfriend'
+    },
+]
+
+const testAvatarData = [
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+    {
+        src: '/'
+    },
+]
+
+
+const testMessData = [
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+    {
+        displayName: 'dasdasdsa',
+        photoURL: '/',
+        lastMess: 'sdasdadasdasdasd',
+        lastMessCreatedAt: '10:20'
+    },
+]
+
+const StyledTabs = styled(Tabs)({
+    padding: '0 15%',
+    '& .MuiTabs-flexContainer': {
+        justifyContent: 'space-between'
+    },
+    '& .css-naufw4-MuiButtonBase-root-MuiTab-root.Mui-selected': {
+        color: '#7877ff'
+    },
+    '& .MuiTabs-indicator': {
+        backgroundColor: '#7877ff'
+    }
+});
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
     return (
-        <div>MessageBox</div>
-    )
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 0, }}>
+                    {children}
+                </Box>
+            )}
+        </div>
+    );
 }
 
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+export default function MessageBox() {
+
+    const router = useRouter();
+    const { currentUser } = useContext(AppContext)
+
+
+    const [value, setValue] = React.useState(1);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    // const { currentUser } = useContext(AppContext)
+    console.log("currentUser chat", currentUser)
+
+    return (
+        <>
+            <Head>
+                <title>Heyo Chat</title>
+                <link rel="icon" href="/favicon.ico"></link>
+            </Head>
+
+            <Grid sx={{ backgroundColor: '#252837' }}>
+                <Box>
+                    <TabPanel className={style.cover__mess} value={value} index={1} sx={{ padding: '0' }}>
+                        <MessBoxHeader />
+                        <ChatRoomList />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <ChatBoxFollowingList />
+                    </TabPanel>
+                </Box>
+                <Box sx={{ position: 'fixed', bottom: '0', left: 0, width: '100%', backgroundColor: '#252837', color: '#b6bbc1', boxShadow: '0px -10px 12px 0px #33344b92', zIndex: '1000000' }}>
+                    <StyledTabs className={style.testClass} value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                        <Link href='/' passHref>
+                            <a className={style.footer__tab}>
+                                <AiFillHome />
+                            </a>
+                        </Link>
+                        {
+                            footerItem.map((item, index) => {
+                                console.log("index", index)
+                                return (
+                                    <Tab className={style.footer__tab} label={item.icon} {...a11yProps(index)} sx={{ fontSize: '20px' }} />
+                                )
+                            })
+                        }
+                        {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+                    </StyledTabs>
+                </Box>
+                {/* <MessBoxFooter /> */}
+            </Grid>
+            {/* <ChatBox /> */}
+        </>
+    )
+}
 
 MessageBox.getLayout = function PageLayout(page) {
     return (
         <>
-            {page}
+            <AuthProvider>
+                <AppProvider>
+                    <PostProvider>
+                        <StoreProvider>
+                            {page}
+                        </StoreProvider>
+                    </PostProvider>
+                </AppProvider>
+            </AuthProvider>
         </>
     )
 }

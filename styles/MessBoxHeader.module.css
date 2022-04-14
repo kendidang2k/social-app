@@ -1,0 +1,26 @@
+.form__search__hidden {
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease-in-out;
+}
+
+.form__search {
+  width: 100%;
+  height: 25px;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s ease-in-out;
+}
+
+.mess__search__input {
+  height: 100%;
+  width: 100%;
+  padding: 0 7px;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}

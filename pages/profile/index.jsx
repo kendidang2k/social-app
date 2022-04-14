@@ -44,8 +44,6 @@ export default function Profile() {
 
     const { currentUser, loading, setLoading } = useContext(AppContext);
 
-    console.log("current user:", currentUser);
-
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -61,7 +59,7 @@ export default function Profile() {
                             currentUser[0].coverPhoto ?
                                 <img src={currentUser[0].coverPhoto} alt="Cover Photo" className={style.cover__photo} />
                                 :
-                                <img src='/' alt="test" className={style.cover__photo} />
+                                ""
                         }
                         {
                             currentUser[0].photoURL && <Avatar src={currentUser[0].photoURL} alt="Photo Avat" sx={{ width: '90px', height: '90px', position: 'absolute', bottom: '-60px', left: '5%', border: '5px solid #fff' }}></Avatar>
