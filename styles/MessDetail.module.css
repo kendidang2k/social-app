@@ -13,7 +13,7 @@
 
 .cover__current__user__mess {
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
   align-items: flex-end;
   margin-right: 10px;
 }

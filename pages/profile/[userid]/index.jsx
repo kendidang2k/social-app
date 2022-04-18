@@ -54,6 +54,7 @@ export default function Profile() {
     const router = useRouter()
 
     const userClickedId = router.query.userid;
+    const userClickedUID = localStorage.getItem("userClickedUID")
 
     const [userDataInfo, setUserDataInfo] = useState({})
     const [isFollowed, setIsFollowed] = useState(false)
@@ -91,11 +92,11 @@ export default function Profile() {
     const handleUnfollow = async () => {
         const docRef = doc(db, 'users', currentUser[0].docid);
         updateDoc(docRef, {
-            following: arrayRemove(userClickedId)
+            following: arrayRemove(userClickedUID)
         });
         const userClickedRef = doc(db, 'users', userClickedId);
         updateDoc(userClickedRef, {
-            follower: arrayRemove(currentUser[0].docid)
+            follower: arrayRemove(currentUser[0].uid)
         });
         const docSnap = await getDoc(userClickedRef);
         setFollowerNumber(docSnap.data().follower.length)
@@ -105,11 +106,11 @@ export default function Profile() {
     const handleFollow = () => {
         const docRef = doc(db, 'users', currentUser[0].docid);
         updateDoc(docRef, {
-            following: arrayUnion(userClickedId)
+            following: arrayUnion(userClickedUID)
         });
         const userClickedRef = doc(db, 'users', userClickedId);
         updateDoc(userClickedRef, {
-            follower: arrayUnion(currentUser[0].docid)
+            follower: arrayUnion(currentUser[0].uid)
         });
         updateDoc(userClickedRef, {
             notifications: arrayUnion(currentUser[0].docid)

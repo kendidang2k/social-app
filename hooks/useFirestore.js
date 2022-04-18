@@ -8,8 +8,10 @@ const useFirestore = (collectionName, condition) => {
 
     useEffect(() => {
         let collectionRef;
-        if (condition.orderBy) {
+        if (condition.orderBy == true) {
             collectionRef = query(collection(db, collectionName), orderBy('createdAt', 'desc'));
+        } else if (condition.orderBy == false){
+            collectionRef = query(collection(db, collectionName), orderBy('createdAt', 'asc'));
         } else {
             collectionRef = query(collection(db, collectionName));
         }

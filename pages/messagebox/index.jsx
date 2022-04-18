@@ -24,6 +24,7 @@ import ChatBox from '../../components/ChatBox';
 import AuthProvider from '../../context/AuthProvider';
 import PostProvider from '../../context/PostProvider';
 import StoreProvider from '../../context/StoreProvider';
+import { MessContext } from '../../context/MessProvider';
 
 const footerItem = [
     {
@@ -35,109 +36,6 @@ const footerItem = [
         id: '3',
         icon: <BsFillPersonFill />,
         path: '/messfriend'
-    },
-]
-
-const testAvatarData = [
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-    {
-        src: '/'
-    },
-]
-
-
-const testMessData = [
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
-    },
-    {
-        displayName: 'dasdasdsa',
-        photoURL: '/',
-        lastMess: 'sdasdadasdasdasd',
-        lastMessCreatedAt: '10:20'
     },
 ]
 
@@ -190,7 +88,10 @@ function a11yProps(index) {
 export default function MessageBox() {
 
     const router = useRouter();
-    const { currentUser } = useContext(AppContext)
+    const { currentUser } = useContext(MessContext)
+    // if (currentUser[0]) {
+    //     console.log("currentUser chat", currentUser)
+    // }
 
 
     const [value, setValue] = React.useState(1);
@@ -200,7 +101,6 @@ export default function MessageBox() {
     };
 
     // const { currentUser } = useContext(AppContext)
-    console.log("currentUser chat", currentUser)
 
     return (
         <>
@@ -209,37 +109,42 @@ export default function MessageBox() {
                 <link rel="icon" href="/favicon.ico"></link>
             </Head>
 
-            <Grid sx={{ backgroundColor: '#252837' }}>
-                <Box>
-                    <TabPanel className={style.cover__mess} value={value} index={1} sx={{ padding: '0' }}>
-                        <MessBoxHeader />
-                        <ChatRoomList />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <ChatBoxFollowingList />
-                    </TabPanel>
-                </Box>
-                <Box sx={{ position: 'fixed', bottom: '0', left: 0, width: '100%', backgroundColor: '#252837', color: '#b6bbc1', boxShadow: '0px -10px 12px 0px #33344b92', zIndex: '1000000' }}>
-                    <StyledTabs className={style.testClass} value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Link href='/' passHref>
-                            <a className={style.footer__tab}>
-                                <AiFillHome />
-                            </a>
-                        </Link>
-                        {
-                            footerItem.map((item, index) => {
-                                console.log("index", index)
-                                return (
-                                    <Tab className={style.footer__tab} label={item.icon} {...a11yProps(index)} sx={{ fontSize: '20px' }} />
-                                )
-                            })
-                        }
-                        {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
-                    </StyledTabs>
-                </Box>
-                {/* <MessBoxFooter /> */}
-            </Grid>
-            {/* <ChatBox /> */}
+            {
+                currentUser[0] && <Grid sx={{ backgroundColor: '#252837' }}>
+                    <Box>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <TabPanel className={style.cover__mess} value={value} index={1} sx={{ padding: '0' }}>
+                                    <MessBoxHeader />
+                                    <ChatRoomList currentUser={currentUser[0]} />
+                                </TabPanel>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TabPanel value={value} index={2}>
+                                    <ChatBoxFollowingList currentUser={currentUser[0]} />
+                                </TabPanel>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    <Box sx={{ position: 'fixed', bottom: '0', left: 0, width: '100%', backgroundColor: '#252837', color: '#b6bbc1', boxShadow: '0px -10px 12px 0px #33344b92', zIndex: '1000000' }}>
+                        <StyledTabs className={style.testClass} value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                            <Link href='/' passHref>
+                                <a className={style.footer__tab}>
+                                    <AiFillHome />
+                                </a>
+                            </Link>
+                            {
+                                footerItem.map((item, index) => {
+                                    return (
+                                        <Tab className={style.footer__tab} label={item.icon} {...a11yProps(index)} sx={{ fontSize: '20px' }} key={index} />
+                                    )
+                                })
+                            }
+                        </StyledTabs>
+                    </Box>
+                    <ChatBox currentUser={currentUser[0]} />
+                </Grid>
+            }
         </>
     )
 }
@@ -247,15 +152,9 @@ export default function MessageBox() {
 MessageBox.getLayout = function PageLayout(page) {
     return (
         <>
-            <AuthProvider>
-                <AppProvider>
-                    <PostProvider>
-                        <StoreProvider>
-                            {page}
-                        </StoreProvider>
-                    </PostProvider>
-                </AppProvider>
-            </AuthProvider>
+            {page}
         </>
     )
 }
+
+

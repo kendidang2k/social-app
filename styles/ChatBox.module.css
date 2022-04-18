@@ -10,5 +10,29 @@
 
 .current__user__mess {
   position: relative;
-  flex-direction: row-reverse;
+  flex-direction: row-reverse !important;
+}
+
+#message__input {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  width: 100%;
+}
+
+.message__button__submit {
+  font-size: 23px;
+  color: #fd6600;
+  transform: rotate(-45deg);
+}
+
+.choose__image__message:hover {
+  background-color: inherit;
+  box-shadow: none;
+}
+
+.chat__box__hidden {
+  right: -500px;
+  visibility: hidden;
+  transition: 0.5s ease-in-out;
 }

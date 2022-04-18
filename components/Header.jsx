@@ -101,7 +101,6 @@ export default function Header({ navControl, navStatus }) {
                     <Link href="/messagebox">
                         <a className={style.header__button}><RiChat3Line /></a>
                     </Link>
-                    <ButtonBase onClick={() => router.push("/messagebox")} sx={{ width: '40px', height: '20px', backgroundColor: '#000' }}>Change to mess</ButtonBase>
                     <Link href="/story" passHref>
                         <a className={style.header__button}><MdHistory /></a>
                     </Link>
@@ -139,6 +138,7 @@ export default function Header({ navControl, navStatus }) {
                                 handleSubmitSearch(JSON.stringify(values.searchInput).replaceAll('"', ''))
                                 handleChangeInput();
                                 setSearchResultVisible(true)
+                                document.getElementById('searchInputPc').value = ''
                             }}
                         >
                             {props => (

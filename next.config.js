@@ -1,11 +1,11 @@
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/messagebox',
-        destination: '/messagebox',
-        permanent: false,
-      },
-    ]
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/',
+  //       destination: '/messagebox',
+  //       permanent: false,
+  //     },
+  //   ]
+  // },
 }

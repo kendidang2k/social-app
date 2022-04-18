@@ -9,6 +9,7 @@ export default function AppProvider({ children }) {
     const { user } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(true);
+    const [selectedRoom, setSelectedroom] = useState({})
 
     const currentUserCondition = useMemo(() => {
         return {
@@ -19,7 +20,7 @@ export default function AppProvider({ children }) {
     }, [user.uid])
 
     const currentUser = useFirestore('users', currentUserCondition)
-    console.log('currentUser', currentUser  )
+    console.log('currentUser', currentUser)
 
     const allUserCondition = useMemo(() => {
         return {
@@ -38,11 +39,6 @@ export default function AppProvider({ children }) {
             compareValue: user.uid
         }
     }, [user.uid])
-    // if (currentUser && allUser) {
-    //     setLoading(false)
-    // } else {
-    //     setLoading(true)
-    // }
 
     const allPosts = useFirestore('posts', '')
 

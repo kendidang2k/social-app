@@ -10,6 +10,7 @@ export default function StoreProvider({ children }) {
     const [searchResultVisible, setSearchResultVisible] = useState(false);
     const [isStoryVisible, setIsStoryVisible] = useState(false);
     const [isUpdateByCreate, setIsUpdateByCreate] = useState(false)
+    const [isChatBoxVisible, setIsChatBoxVisible] = useState(false)
 
     return (
         <StoreContext.Provider value={{
@@ -18,7 +19,8 @@ export default function StoreProvider({ children }) {
             isSettingVisible, setIsSettingVisible,
             searchResultVisible, setSearchResultVisible,
             isStoryVisible, setIsStoryVisible,
-            isUpdateByCreate, setIsUpdateByCreate
+            isUpdateByCreate, setIsUpdateByCreate,
+            isChatBoxVisible, setIsChatBoxVisible
         }}>
             {children}
         </StoreContext.Provider>
