@@ -1,7 +1,7 @@
 import { async } from '@firebase/util'
 import { Avatar, Box, ButtonBase, Grid, Typography } from '@mui/material'
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../context/AppProvider'
 import { MessContext } from '../context/MessProvider'
 import { db } from '../firebase/config'
@@ -15,24 +15,35 @@ export default function ChatBoxFollowingList({ currentUser }) {
     var minutes = date.getMinutes();
     var hour = date.getHours();
 
-    console.log()
-
     const handleAddRoom = async (user) => {
         const q = query(collection(db, "rooms"), where("members", "array-contains", currentUser.uid));
         const querySnapshot = await getDocs(q);
+        let addRoomEnable = true;
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             if (doc.data().members.includes(user.uid)) {
                 alert("existed")
+                addRoomEnable = false;
+                return
             } else {
+                addRoomEnable = false;
                 addDocument('rooms', {
                     name: user.displayName,
                     lastMess: '',
                     lastMessCreatedAt: `${hour}:${minutes}`,
                     members: [user.uid, currentUser.uid],
                 })
+                return
             }
         });
+        if (addRoomEnable) {
+            addDocument('rooms', {
+                name: user.displayName,
+                lastMess: '',
+                lastMessCreatedAt: `${hour}:${minutes}`,
+                members: [user.uid, currentUser.uid],
+            })
+        }
     }
 
     return (
@@ -43,7 +54,7 @@ export default function ChatBoxFollowingList({ currentUser }) {
                 </Box>
                 <Typography component={"p"} sx={{ color: '#b6bbc1', fontWeight: 'bold' }}>Following List</Typography>
             </Box>
-            <Box sx={{ height: 'calc(100vh - 45px - 48px)', backgroundColor: '#252837', overflow: 'scroll' }}>
+            <Box sx={{ height: 'calc(100vh - 45px - 48px)', backgroundColor: '#252837', overflowY: 'scroll', overflowX: 'hidden' }}>
                 {
                     allFollowingUser && allFollowingUser.map((item, index) => {
                         return (

@@ -76,24 +76,40 @@ export default function ChatRoomList({ currentUser }) {
     const { isChatBoxVisible, setIsChatBoxVisible } = useContext(StoreContext);
 
     const { allFollowingUser, rooms, selectedRoom, setSelectedRoom } = useContext(MessContext);
+    const date = new Date;
+    var minutes = date.getMinutes();
+    var hour = date.getHours();
 
 
     const handleAddRoom = async (user) => {
         const q = query(collection(db, "rooms"), where("members", "array-contains", currentUser.uid));
         const querySnapshot = await getDocs(q);
+        let addRoomEnable = true;
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             if (doc.data().members.includes(user.uid)) {
                 alert("existed")
+                addRoomEnable = false;
+                return
             } else {
+                addRoomEnable = false;
                 addDocument('rooms', {
                     name: user.displayName,
                     lastMess: '',
                     lastMessCreatedAt: `${hour}:${minutes}`,
                     members: [user.uid, currentUser.uid],
                 })
+                return
             }
         });
+        if (addRoomEnable) {
+            addDocument('rooms', {
+                name: user.displayName,
+                lastMess: '',
+                lastMessCreatedAt: `${hour}:${minutes}`,
+                members: [user.uid, currentUser.uid],
+            })
+        }
     }
 
     return (
