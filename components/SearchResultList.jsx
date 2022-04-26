@@ -52,11 +52,9 @@ export default function SearchResultList({ searchValue, currentUser }) {
                     allFollowingUser && allFollowingUser.filter(user => user.displayName.includes(searchValue)).map((item) => {
                         console.log("item", item)
                         return (
-                            <Grid>
-                                <Grid onClick={() => handleAddRoom(item)} sx={{ display: 'flex', alignItems: 'center', padding: '10px', cursor: 'pointer' }} key={item.docid}>
-                                    <Avatar src={item.photoURL} sx={{ width: '30px', height: '30px' }}></Avatar>
-                                    <Typography component={"p"} sx={{ marginLeft: '10px', color: '#fff' }}>{item.displayName}</Typography>
-                                </Grid>
+                            <Grid onClick={() => handleAddRoom(item)} sx={{ display: 'flex', alignItems: 'center', padding: '10px', cursor: 'pointer' }} key={item.docid}>
+                                <Avatar src={item.photoURL} sx={{ width: '30px', height: '30px' }}></Avatar>
+                                <Typography component={"p"} sx={{ marginLeft: '10px', color: '#fff' }}>{item.displayName}</Typography>
                             </Grid>
                         )
                     })
