@@ -45,7 +45,7 @@ export default function NotificationBox({ notificationsData }) {
                             <li key={index}>
                                 <Link href={`/profile/${notiItem.docid}`} passHref>
                                     <a>
-                                        <Grid container sx={{ width: '250px', backgroundColor: '#f3f3f3', padding: '10px', borderRadius: '10px' }}>
+                                        <Grid container sx={{ width: '270px', backgroundColor: '#f3f3f3', padding: '10px', borderRadius: '10px' }}>
                                             <Grid item xs={2}>
                                                 <Avatar src={notiItem.photoURL} alt={notiItem.displayName} sx={{ width: '40px', height: '40px' }}></Avatar>
                                             </Grid>

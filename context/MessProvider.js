@@ -43,6 +43,8 @@ export default function MessProvider({ children }) {
 
     const allFollowingUser = useFirestore('users', allFollowingUserCondition)
 
+    console.log('allFollowingUser', allFollowingUser)
+
     const recentRoom = useMemo(() => rooms.find((room) =>
         room.docid === selectedRoom
     )

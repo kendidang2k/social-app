@@ -44,8 +44,10 @@ export default function CreatePost() {
     const onChangeImageCreatePost = (e) => {
         handleResetFileChoosen();
         setFile(e.target.files[0])
+        console.log("file", file)
         if (e.target.files[0].type == "image/jpeg") {
             setThumb(URL.createObjectURL(e.target.files[0]));
+
         }
         else {
             setVideo(URL.createObjectURL(e.target.files[0]))
@@ -76,7 +78,7 @@ export default function CreatePost() {
                     postImage: thumb,
                     postVideo: video,
                 }}
-                onSubmit={async (values, actions) => {
+                onSubmit={(values, actions) => {
                     if (file == null) {
                         addDocument('posts', {
                             publisherID: currentUser[0].docid,

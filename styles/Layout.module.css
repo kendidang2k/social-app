@@ -19,6 +19,31 @@
   background: #555;
 }
 
+.homepage__edit::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.homepage__edit::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.homepage__edit::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+.homepage__edit::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.homepage__edit {
+  padding-top: 0 !important;
+}
+
 .navbar__hidden__mobile {
   left: -350px !important;
 }

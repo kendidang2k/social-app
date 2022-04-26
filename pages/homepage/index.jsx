@@ -39,12 +39,15 @@ export default function Homepage() {
           }
 
         </Grid>
-        <Grid item xs={12} md={4} sx={{ padding: { xs: '0 10px', md: '25px 15px 0 10px' } }}>
-          <FriendRequest />
-          <MoreFriend />
-          <SuggestGroup />
-          <TopBlog />
-        </Grid>
+        {
+          currentUser[0] && <Grid item xs={12} md={4} sx={{ padding: { xs: '0 10px', md: '25px 15px 0 10px' } }}>
+            <FriendRequest currentUser={currentUser[0]} />
+            <MoreFriend />
+            <SuggestGroup />
+            <TopBlog />
+          </Grid>
+        }
+
       </Grid >
     </>
   )

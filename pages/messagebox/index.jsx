@@ -1,5 +1,5 @@
 import { Avatar, Box, Grid, Tab, Tabs, Typography, } from '@mui/material'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from "swiper/react";
 import MessBoxFooter from '../../components/MessBoxFooter'
@@ -23,8 +23,9 @@ import Head from 'next/head';
 import ChatBox from '../../components/ChatBox';
 import AuthProvider from '../../context/AuthProvider';
 import PostProvider from '../../context/PostProvider';
-import StoreProvider from '../../context/StoreProvider';
+import StoreProvider, { StoreContext } from '../../context/StoreProvider';
 import { MessContext } from '../../context/MessProvider';
+import SearchResultList from '../../components/SearchResultList';
 
 const footerItem = [
     {
@@ -89,6 +90,8 @@ export default function MessageBox() {
 
     const router = useRouter();
     const { currentUser } = useContext(MessContext)
+    const { searchMessVisible, messSearchValue } = useContext(StoreContext);
+
     // if (currentUser[0]) {
     //     console.log("currentUser chat", currentUser)
     // }
@@ -100,6 +103,17 @@ export default function MessageBox() {
         setValue(newValue);
     };
 
+    // useEffect(() => {
+    //     const getRoomName = () => {
+
+    //     }
+
+    //     return () => {
+    //         getRoomName;
+    //     }
+    // }, [third])
+
+
     // const { currentUser } = useContext(AppContext)
 
     return (
@@ -110,39 +124,42 @@ export default function MessageBox() {
             </Head>
 
             {
-                currentUser[0] && <Grid sx={{ backgroundColor: '#252837' }}>
-                    <Box>
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <TabPanel className={style.cover__mess} value={value} index={1} sx={{ padding: '0' }}>
-                                    <MessBoxHeader />
-                                    <ChatRoomList currentUser={currentUser[0]} />
-                                </TabPanel>
+                currentUser[0] && <Grid container sx={{ backgroundColor: '#252837' }}>
+                    <Grid xs={12} md={4} sx={{ position: 'relative' }}>
+                        <Box >
+                            <Grid container>
+                                <Grid item xs={12} >
+                                    <TabPanel className={style.cover__mess} value={value} index={1} sx={{ padding: '0', position: 'relative' }} >
+                                        <MessBoxHeader />
+                                        <ChatRoomList currentUser={currentUser[0]} />
+                                    </TabPanel>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TabPanel value={value} index={2}>
+                                        <ChatBoxFollowingList currentUser={currentUser[0]} />
+                                    </TabPanel>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TabPanel value={value} index={2}>
-                                    <ChatBoxFollowingList currentUser={currentUser[0]} />
-                                </TabPanel>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ position: 'fixed', bottom: '0', left: 0, width: '100%', backgroundColor: '#252837', color: '#b6bbc1', boxShadow: '0px -10px 12px 0px #33344b92', zIndex: '1000000' }}>
-                        <StyledTabs className={style.testClass} value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                            <Link href='/' passHref>
-                                <a className={style.footer__tab}>
-                                    <AiFillHome />
-                                </a>
-                            </Link>
-                            {
-                                footerItem.map((item, index) => {
-                                    return (
-                                        <Tab className={style.footer__tab} label={item.icon} {...a11yProps(index)} sx={{ fontSize: '20px' }} key={index} />
-                                    )
-                                })
-                            }
-                        </StyledTabs>
-                    </Box>
+                        </Box>
+                        <Box sx={{ position: 'absolute', bottom: '0', left: 0, width: '100%', backgroundColor: '#252837', color: '#b6bbc1', boxShadow: '0px -10px 12px 0px #33344b92', zIndex: '1000000' }}>
+                            <StyledTabs className={style.testClass} value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                <Link href='/' passHref>
+                                    <a className={style.footer__tab}>
+                                        <AiFillHome />
+                                    </a>
+                                </Link>
+                                {
+                                    footerItem.map((item, index) => {
+                                        return (
+                                            <Tab className={style.footer__tab} label={item.icon} {...a11yProps(index)} sx={{ fontSize: '20px' }} key={index} />
+                                        )
+                                    })
+                                }
+                            </StyledTabs>
+                        </Box>
+                    </Grid>
                     <ChatBox currentUser={currentUser[0]} />
+                    {searchMessVisible && <SearchResultList currentUser={currentUser[0]} searchValue={messSearchValue} />}
                 </Grid>
             }
         </>

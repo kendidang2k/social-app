@@ -50,7 +50,10 @@ export default function Login() {
           photo: [],
           video: [],
           posts: [],
-          blog: []
+          blog: [],
+          phoneNumber: '',
+          email: '',
+          age: '',
         })
       }
       router.push('homepage');
@@ -74,7 +77,10 @@ export default function Login() {
           photo: [],
           video: [],
           posts: [],
-          blog: []
+          blog: [],
+          phoneNumber: '',
+          email: '',
+          age: '',
         })
       }
       router.push('homepage')
@@ -189,7 +195,10 @@ export default function Login() {
                       photo: [],
                       video: [],
                       posts: [],
-                      blog: []
+                      blog: [],
+                      phoneNumber: '',
+                      email: '',
+                      age: '',
                     })
                     toast.success("Register successfully !!")
                   })

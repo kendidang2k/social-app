@@ -9,3 +9,7 @@
   background-color: inherit;
   box-shadow: none;
 }
+
+.Avatar {
+  bottom: -70px !important;
+}

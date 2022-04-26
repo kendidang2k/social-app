@@ -1,19 +1,20 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AppContext } from '../context/AppProvider';
 
 import "swiper/css";
 import "swiper/css/pagination";
 
-import style from '../styles/MessageBox.module.css'
 import { AuthContext } from '../context/AuthProvider';
 import { StoreContext } from '../context/StoreProvider';
 import { MessContext } from '../context/MessProvider';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { addDocument } from '../firebase/service';
+import RoomItem from './RoomItem';
 
+import style from '../styles/MessageBox.module.css'
 const testMessData = [
     {
         displayName: 'dasdasdsa',
@@ -76,19 +77,23 @@ export default function ChatRoomList({ currentUser }) {
     const { isChatBoxVisible, setIsChatBoxVisible } = useContext(StoreContext);
 
     const { allFollowingUser, rooms, selectedRoom, setSelectedRoom } = useContext(MessContext);
+
     const date = new Date;
     var minutes = date.getMinutes();
     var hour = date.getHours();
+
+
 
 
     const handleAddRoom = async (user) => {
         const q = query(collection(db, "rooms"), where("members", "array-contains", currentUser.uid));
         const querySnapshot = await getDocs(q);
         let addRoomEnable = true;
-        querySnapshot.forEach((doc) => {
+        await querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             if (doc.data().members.includes(user.uid)) {
                 alert("existed")
+                setIsChatBoxVisible(!isChatBoxVisible)
                 addRoomEnable = false;
                 return
             } else {
@@ -99,6 +104,7 @@ export default function ChatRoomList({ currentUser }) {
                     lastMessCreatedAt: `${hour}:${minutes}`,
                     members: [user.uid, currentUser.uid],
                 })
+                setIsChatBoxVisible(!isChatBoxVisible)
                 return
             }
         });
@@ -113,7 +119,7 @@ export default function ChatRoomList({ currentUser }) {
     }
 
     return (
-        <Grid sx={{ margin: '35px 0 50px 0', padding: '10px 0', height: 'calc(100vh - 45px - 40px)', overflow: 'scroll' }}>
+        <Grid className={style.cover__roomlist} sx={{ margin: '35px 0 50px 0', padding: '30px 0 10px 0', height: 'calc(100vh - 45px - 40px)', overflowY: 'scroll' }}>
             <Box sx={{ padding: '0 10px' }}>
                 <Typography component={"p"} sx={{ color: '#fff' }}>Friends</Typography>
                 <Grid sx={{ display: 'flex' }}>
@@ -141,14 +147,7 @@ export default function ChatRoomList({ currentUser }) {
                     {
                         rooms && rooms.map((room, index) => {
                             return (
-                                <Grid onClick={() => { setIsChatBoxVisible(!isChatBoxVisible); setSelectedRoom(room.docid) }} sx={{ display: 'flex', alignItems: 'center', position: 'relative', borderBottom: '1px solid #1f222f', padding: '10px' }} key={index}>
-                                    <Avatar src={room.photoURL}></Avatar>
-                                    <Box sx={{ padding: '0 10px', width: '80%' }}>
-                                        <Typography component={"p"} sx={{ fontWeight: 'bold', color: '#b5b7bf' }}>{room.name}</Typography>
-                                        <Typography component={"p"} sx={{ width: '100%', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', color: '#727585' }}>{room.lastMess}</Typography>
-                                    </Box>
-                                    <Typography component={"p"} sx={{ position: 'absolute', right: '10px', top: '15px', margin: '0', fontSize: '12px', color: '#727585' }}>{room.lastMessCreatedAt}</Typography>
-                                </Grid>
+                                <RoomItem key={index} room={room} currentUser={currentUser} />
                             )
                         })
                     }

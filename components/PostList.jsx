@@ -31,12 +31,11 @@ export default function PostList({ currentUser }) {
       } else {
         postRef = query(collection(db, "posts"), orderBy('createdAt', 'desc'), limit(limitDoc))
       }
-      console.log('object', limitDoc);
+      // console.log('limitDoc', limitDoc);
       onSnapshot(postRef, (querySnapshot) => {
         const tempDataArray = [];
         // console.log("teamldata after create", tempDataArray);
         const postArrayUser = currentUser.following;
-        console.log("current u following:", postArrayUser)
         if (postArrayUser.includes(currentUser.docid)) {
           console.log("existed");
         } else {
@@ -45,12 +44,12 @@ export default function PostList({ currentUser }) {
         querySnapshot.forEach((doc) => {
           if (postArrayUser.includes(doc.data().publisherID)) {
             tempDataArray.push({ docid: doc.id, ...doc.data() })
-            console.log("tempDataArray:", tempDataArray)
+            // console.log("tempDataArray:", tempDataArray)
           }
         })
         setPostList(tempDataArray)
         setLastDataPost(tempDataArray[tempDataArray.length - 1])
-        console.log("postList:", postList)
+        // console.log("postList:", postList)
       })
     }
 
@@ -59,13 +58,6 @@ export default function PostList({ currentUser }) {
     //   isMounted = false;
     // };
   }, [currentUser.following, loadMore, allPosts, currentUser])
-
-  // window.onscroll = function (ev) {
-  //   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-  //     alert("you're at the bottom of the page");
-  //   }
-  // };
-
 
   return (
     postList ?

@@ -7,6 +7,8 @@ import { MessContext } from '../context/MessProvider'
 import { db } from '../firebase/config'
 import { addDocument } from '../firebase/service'
 
+import style from '../styles/MessageBox.module.css'
+
 export default function ChatBoxFollowingList({ currentUser }) {
 
     const { allFollowingUser, selectedRoom, setSelectedRoom } = useContext(MessContext);
@@ -20,7 +22,6 @@ export default function ChatBoxFollowingList({ currentUser }) {
         const querySnapshot = await getDocs(q);
         let addRoomEnable = true;
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             if (doc.data().members.includes(user.uid)) {
                 alert("existed")
                 addRoomEnable = false;
@@ -47,14 +48,14 @@ export default function ChatBoxFollowingList({ currentUser }) {
     }
 
     return (
-        <Grid sx={{ marginTop: '45px' }}>
-            <Box sx={{ position: 'fixed', top: 0, left: '0', width: '100%', height: '45px', backgroundColor: '#252837', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0px 10px 12px -4px #3a3c6092' }}>
+        <Grid sx={{}}>
+            <Box sx={{ position: 'absolute', top: 0, left: '0', width: '100%', height: '60px', backgroundColor: '#252837', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0px 10px 12px -4px #3a3c6092' }}>
                 <Box sx={{ position: 'absolute', left: '10px' }}>
                     <Avatar src={currentUser.photoURL} sx={{ width: '25px', height: '25px' }}></Avatar>
                 </Box>
                 <Typography component={"p"} sx={{ color: '#b6bbc1', fontWeight: 'bold' }}>Following List</Typography>
             </Box>
-            <Box sx={{ height: 'calc(100vh - 45px - 48px)', backgroundColor: '#252837', overflowY: 'scroll', overflowX: 'hidden' }}>
+            <Box className={style.cover__roomlist} sx={{ height: 'calc(100vh - 45px - 40px)', backgroundColor: '#252837', overflowY: 'scroll', overflowX: 'hidden', margin: '35px 0 50px 0', paddingTop: '20px' }}>
                 {
                     allFollowingUser && allFollowingUser.map((item, index) => {
                         return (

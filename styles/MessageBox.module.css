@@ -15,3 +15,24 @@
 .footer__tab div {
   justify-content: space-between !important;
 }
+
+.cover__roomlist::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.cover__roomlist::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 10px;
+}
+
+/* Handle */
+.cover__roomlist::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+.cover__roomlist::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

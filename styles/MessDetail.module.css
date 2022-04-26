@@ -23,6 +23,13 @@
 .current__user__mess {
   border-top-right-radius: 0;
 }
+.image {
+  max-width: 250px;
+}
+
+.video__mess {
+  max-width: 250px;
+}
 
 .other__mess {
   margin-right: 10px;

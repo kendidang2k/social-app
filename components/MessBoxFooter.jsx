@@ -35,8 +35,6 @@ export default function MessBoxFooter() {
 
     const router = useRouter();
 
-    console.log('path', router.pathname)
-
     return (
         <Grid sx={{ position: 'fixed', bottom: '40px', left: 0, width: '100%', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#252837', color: '#b6bbc1', padding: '0 80px', boxShadow: '0px -10px 12px 0px #33344b92' }}>
             {

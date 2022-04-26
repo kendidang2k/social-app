@@ -1,0 +1,26 @@
+.header__edit {
+  transform: rotate(-20deg);
+  background: rgb(230, 127, 38);
+  background: linear-gradient(
+    138deg,
+    rgba(230, 127, 38, 1) 0%,
+    rgba(233, 142, 57, 1) 27%,
+    rgba(252, 177, 103, 1) 61%,
+    rgba(251, 200, 133, 1) 100%
+  );
+  border-bottom-left-radius: 80px;
+  z-index: 0;
+  /* clip-path: polygon(0 0, 100% 0, 90% 92%, 0% 100%); */
+}
+
+.field {
+  width: 100%;
+  height: 40px;
+  border: none;
+  background-color: rgb(227, 227, 227);
+  border-radius: 5px;
+  font-weight: bold;
+  color: rgb(231 104 0);
+  padding: 2px 10px;
+  outline: none;
+}

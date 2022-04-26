@@ -30,7 +30,6 @@ const useFirestore = (collectionName, condition) => {
                     ...doc.data()
                 })
             })
-
             setDocument(CoDocuments);
         })
 

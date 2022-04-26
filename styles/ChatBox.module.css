@@ -36,3 +36,35 @@
   visibility: hidden;
   transition: 0.5s ease-in-out;
 }
+.img__mess__input {
+  max-height: 50px;
+}
+
+.auto__scroll__to__bottom {
+  overflow: hidden;
+}
+
+.auto__scroll__to__bottom::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.auto__scroll__to__bottom::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 10px;
+}
+
+/* Handle */
+.auto__scroll__to__bottom::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+.auto__scroll__to__bottom::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.auto__scroll__to__bottom:hover {
+  overflow: overlay;
+}
