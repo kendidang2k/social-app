@@ -10,6 +10,10 @@ import { Field, Form, Formik } from 'formik';
 import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
+
 export default function index() {
 
     const { currentUser } = useContext(AppContext);
@@ -57,17 +61,14 @@ export default function index() {
                                 phoneNumber: currentUser[0].phoneNumber
                             }}
                             onSubmit={async (values) => {
-                                await new Promise((r) => setTimeout(r, 500));
-                                alert(JSON.stringify(values));
                                 const userRef = doc(db, "users", currentUser[0].docid);
-
-                                // Set the "capital" field of the city 'DC'
                                 updateDoc(userRef, {
                                     name: JSON.stringify(values.name).replaceAll('"', ''),
                                     age: JSON.stringify(values.age).replaceAll('"', ''),
                                     email: JSON.stringify(values.email).replaceAll('"', ''),
                                     phoneNumber: JSON.stringify(values.phoneNumber).replaceAll('"', '')
                                 });
+                                toast.success("Update successfully !!")
                             }}
                         >
                             <Form>
