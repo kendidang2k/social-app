@@ -47,6 +47,7 @@ export default function PostItem({ postItem }) {
     const handleLikePost = () => {
         setLikeStatus(!likeStatus);
         if (likeStatus) {
+            console.log("post Item post home", postItemData)
             setCurrentPostLike(currentPostLike + 1)
             updateDoc(docRef, {
                 like: arrayUnion(currentUser[0].docid)
@@ -156,9 +157,9 @@ export default function PostItem({ postItem }) {
                         <ButtonBase onClick={handleLikePost} className={style.post__item__button_like} sx={{ width: { xs: '28px', md: '32px' }, height: { xs: '28px', md: '32px' }, display: 'flex', alignItems: 'center', justiContent: 'center', border: 'none', borderRadius: '50%', background: 'linear-gradient(135deg,#05f,#09f)', color: '#fff', fontSize: { xs: '15px', md: '20px' }, marginRight: { xs: '5px', md: '10px' }, transition: '.2s ease-in-out' }}>
                             <AiOutlineLike />
                         </ButtonBase>
-                        <ButtonBase className={style.post__item__button_heart} sx={{ width: { xs: '28px', md: '32px' }, height: { xs: '28px', md: '32px' }, display: 'flex', alignItems: 'center', justiContent: 'center', border: 'none', borderRadius: '50%', background: 'linear-gradient(to right,#e44d26,#f16529)', color: '#fff', fontSize: { xs: '15px', md: '20px' }, transition: '.2s ease-in-out' }}>
+                        {/* <ButtonBase className={style.post__item__button_heart} sx={{ width: { xs: '28px', md: '32px' }, height: { xs: '28px', md: '32px' }, display: 'flex', alignItems: 'center', justiContent: 'center', border: 'none', borderRadius: '50%', background: 'linear-gradient(to right,#e44d26,#f16529)', color: '#fff', fontSize: { xs: '15px', md: '20px' }, transition: '.2s ease-in-out' }}>
                             <AiOutlineHeart />
-                        </ButtonBase>
+                        </ButtonBase> */}
                         <Typography sx={{ marginLeft: '5px', color: '#313131', fontWeight: 'bold', fontSize: { xs: '13px', md: '15px' } }}>{currentPostLike} Like</Typography>
                         <ButtonBase className={style.comment__icon__post__item} sx={{ marginLeft: { xs: '15px', md: '25px' }, color: '#313131', fontWeight: 'bold', display: 'flex', alignItems: 'center', fontSize: { xs: '13px', md: '15px', transition: '.2s ease-in-out' } }} onClick={() => setCommentVisible(!commentVisible)}><FaRegComment />{postItemData.comments.length} Comment</ButtonBase>
                     </Grid>

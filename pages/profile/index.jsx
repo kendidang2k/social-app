@@ -141,7 +141,7 @@ export default function Profile() {
                         </Grid>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        Item two
+
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                         <CurrentUserPostList currentuser={currentUser[0]} />

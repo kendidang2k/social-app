@@ -1,38 +1,35 @@
 import { Grid } from '@mui/material'
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { db } from '../firebase/config';
+import { db } from '../firebase/config'
 import PostItem from './PostItem'
 
-export default function CurrentUserPostList({ currentuser }) {
+export default function OtherUserPostList({ otherUserID }) {
 
-    const currentUser = currentuser;
-    console.log("currentUser profile", currentUser)
+    console.log("otherUserID", otherUserID)
 
 
-    const [currentUserPostList, setCurrentUserPostList] = useState([])
+    const [otherUserPostList, setOtherUserPostList] = useState([])
 
     useEffect(() => {
         const getPostList = async () => {
             let dataPost = [];
-            const q = query(collection(db, "posts"), where("publisherID", "==", currentuser.docid));
+            const q = query(collection(db, "posts"), where("publisherID", "==", otherUserID));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 dataPost.push({ docid: doc.id, ...doc.data() })
             });
-            setCurrentUserPostList(dataPost)
+            setOtherUserPostList(dataPost)
         }
 
         getPostList();
-    }, [currentUser.posts])
+    }, [otherUserID])
 
 
     return (
         <Grid>
             {
-                currentUserPostList && currentUserPostList.map((postItem) => {
-
-                    console.log("postItem", postItem)
+                otherUserPostList && otherUserPostList.map((postItem) => {
                     return (
                         <PostItem postItem={postItem} key={postItem.docid} />
                     )

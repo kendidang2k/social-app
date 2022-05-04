@@ -166,14 +166,14 @@ export default function Login() {
             {/* <img src={logo} width='30px' height='30px' alt='logo' /> */}
             <Typography variant='h4' sx={{ fontWeight: 'bold', color: '#6a6262', fontSize: '25px' }}>Sign up</Typography>
             <Typography variant='p' sx={{ fontSize: { xs: '10px', md: '14px' }, color: '#a4a4a4' }}>Share your fantastic moments with other</Typography>
-            <Grid container spacing={1} sx={{ marginTop: '5px' }}>
+            {/* <Grid container spacing={1} sx={{ marginTop: '5px' }}>
               <Grid item xs={12} md={6}>
                 <Button variant="outlined" sx={{ width: '100%', borderColor: '#ec6308', color: '#ec6308', outlineColor: '#ec6308', display: 'flex', alignItems: 'center', fontSize: { xs: '10px', md: '12px' }, fontWeight: 'bold', justifyContent: 'center', padding: { xs: '3px 10px', md: '10px 10px' } }} onClick={handleGgLogin}><Typography component={"span"} sx={{ marginRight: '10px' }}><BsGoogle /></Typography>Sign up with Google</Button>
               </Grid>
               <Grid item xs={12} md={6}>
                 <Button variant="outlined" sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: { xs: '10px', md: '12px' }, fontWeight: 'bold', padding: { xs: '3px 10px', md: '10px 10px' } }} onClick={handleFbLogin}><Typography component={"span"} sx={{ marginRight: '10px' }}><FaFacebookF /></Typography>Sign up with Facebook</Button>
               </Grid>
-            </Grid>
+            </Grid> */}
             <Formik
               initialValues={{
                 email: '',
@@ -211,7 +211,7 @@ export default function Login() {
               validationSchema={validateSignup}
             >
               <Form>
-                <Typography component="p" sx={{ width: '100%', textAlign: 'center' }}><span className={style.or__tag}>OR</span></Typography>
+                {/* <Typography component="p" sx={{ width: '100%', textAlign: 'center' }}><span className={style.or__tag}>OR</span></Typography> */}
                 <Box sx={{ marginBottom: '15px' }}>
                   <TextInput sx={{ width: '100%', height: '10px', marginBottom: '10px' }} label="Email" id='email' name='email' type='email' />
                 </Box>

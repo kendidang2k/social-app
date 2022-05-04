@@ -15,6 +15,7 @@ import { AppContext } from '../../../context/AppProvider';
 
 import style from '../../../styles/ProfilePage.module.css'
 import AboutTab from '../../../components/AboutTab';
+import OtherUserPostList from '../../../components/OtherUserPostList';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -197,7 +198,7 @@ export default function Profile() {
                             Item Two
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            Item Three
+                            <OtherUserPostList otherUserID={userClickedId} />
                         </TabPanel>
                     </Grid>
                 </Grid>
